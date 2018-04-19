@@ -10,7 +10,7 @@ L = 22;            % cepstral sine lifter parameter
 hamming = @(N)(0.54-0.46*cos(2*pi*[0:N-1].'/(N-1)));
 
 % Read speech samples, sampling rate and precision from file
-[ speech, fs ] = audioread( 'duck.wav' );
+[ speech, fs ] = audioread( 'Duck.wav' );
 
 % Feature extraction (feature vectors as columns)
 [ MFCCs, FBEs, frames ] = ...
