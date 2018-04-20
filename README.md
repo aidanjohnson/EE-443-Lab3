@@ -1,4 +1,4 @@
-# EE 443 Lab3
+# EE 443 Lab 3
 
 ## Problem 1: (Matlab) [MFCC](https://www.mathworks.com/matlabcentral/fileexchange/32849-htk-mfcc-matlab)
 Status: In Progress
