@@ -11,7 +11,8 @@ Status: In Progress
 - Find the GMM parameters of the features found in Problem 1 to cluster the features.
 
 ## Problem 3: (LCDK) Classification of Bird sound using GMM
-Status: Not Started
+Status: Started
+- gmm_write.m
 - Use GMM model trained in Problem 2 to classify the Bird sound received through Line input of LCDK.
 
 ## Problem 4: (Matlab) Training [SVM](https://www.mathworks.com/help/stats/fitcecoc.html) for Bird sound classification
@@ -20,5 +21,6 @@ Status: In Progress
 - Train the SVM model using the features found in Problem 1.
 
 ## Problem 5: (LCDK) Classification of Bird sound using SVM
-Status: Not Started
+Status: Started
+- svm_write.m
 - SVM to classify the features. Use MFCC features to classify Bird sounds.
