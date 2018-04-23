@@ -13,6 +13,7 @@ Status: In Progress
 ## Problem 3: (LCDK) Classification of Bird sound using GMM
 Status: Started
 - gmm_write.m
+- lab3_problem3 directory--main.c WIP, trying to figure out how the .mat object is sent by UART
 - Use GMM model trained in Problem 2 to classify the Bird sound received through Line input of LCDK.
 
 ## Problem 4: (Matlab) Training [SVM](https://www.mathworks.com/help/stats/fitcecoc.html) for Bird sound classification
@@ -23,4 +24,5 @@ Status: In Progress
 ## Problem 5: (LCDK) Classification of Bird sound using SVM
 Status: Started
 - svm_write.m
+- lab3_problem5 directory
 - SVM to classify the features. Use MFCC features to classify Bird sounds.
