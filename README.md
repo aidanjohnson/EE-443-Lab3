@@ -11,7 +11,7 @@ Status: In Progress
 - Find the GMM parameters of the features found in Problem 1 to cluster the features.
 
 ## Problem 3: (LCDK) Classification of Bird sound using GMM
-Status: Started
+Status: In Progress
 - gmm_write.m
 - lab3_problem3 directory--main.c WIP, trying to figure out how the .mat object is sent by UART
 - Use GMM model trained in Problem 2 to classify the Bird sound received through Line input of LCDK.
