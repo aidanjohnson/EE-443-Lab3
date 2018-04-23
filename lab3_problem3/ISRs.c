@@ -9,6 +9,9 @@
 ///////////////////////////////////////////////////////////////////////
 
 #include "DSP_Config.h" 
+#include "fft.h"
+#include "gmm.h"
+#include "libmfcc.h"
   
 // Data is received as 2 16-bit words (left/right) packed into one
 // 32-bit word.  The union allows the data to be accessed as a single 
@@ -17,6 +20,11 @@
 
 #define LEFT  0
 #define RIGHT 1
+
+extern int numFilters;
+#define FFTsize 256
+extern COMPLEX frame[FFTsize];
+int i = 0;
 
 volatile union {
 	Uint32 UINT;
@@ -41,7 +49,7 @@ interrupt void Codec_ISR()
 ///////////////////////////////////////////////////////////////////////
 {                    
 	/* add any local variables here */
-	float xLeft, xRight, yLeft, yRight;
+	float input;
 
 
  	if(CheckForOverrun())					// overrun error occurred (i.e. halted DSP)
@@ -52,17 +60,15 @@ interrupt void Codec_ISR()
 	/* add your code starting here */
 
 	// this example simply copies sample data from in to out
-	xLeft  = CodecDataIn.Channel[ LEFT];
-	xRight = CodecDataIn.Channel[ RIGHT];
+	input  = 0.5*(CodecDataIn.Channel[LEFT] + CodecDataIn.Channel[RIGHT]);
 
-	yLeft  = xLeft;
-	yRight = xRight;
+	frame[i].real = input;
+	if (i > FFTsize)
+		i = 0;
 
-	CodecDataOut.Channel[ LEFT] = yLeft;
-	CodecDataOut.Channel[RIGHT] = yRight;
 
 	/* end your code here */
 
-	WriteCodecData(CodecDataOut.UINT);		// send output data to  port
+	WriteCodecData(0);		// send output data to  port
 }
 
