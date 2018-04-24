@@ -1,6 +1,9 @@
 # FIXED
 
 main.obj: ../main.c
+main.obj: C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/stdio.h
+main.obj: C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/linkage.h
+main.obj: C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/stdarg.h
 main.obj: ../DSP_Config.h
 main.obj: ../LCDK_Support_DSP.h
 main.obj: ../tistdtypes.h
@@ -14,7 +17,6 @@ main.obj: ../libmfcc.h
 main.obj: C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/math.h
 main.obj: C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/float.h
 main.obj: C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/access.h
-main.obj: C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/linkage.h
 main.obj: C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/elfnames.h
 main.obj: C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/mathf.h
 main.obj: C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/unaccess.h
@@ -22,6 +24,9 @@ main.obj: C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/mathl.h
 main.obj: C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/unaccess.h
 
 ../main.c: 
+C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/stdio.h: 
+C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/linkage.h: 
+C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/stdarg.h: 
 ../DSP_Config.h: 
 ../LCDK_Support_DSP.h: 
 ../tistdtypes.h: 
@@ -35,7 +40,6 @@ C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/stdint.h:
 C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/math.h: 
 C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/float.h: 
 C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/access.h: 
-C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/linkage.h: 
 C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/elfnames.h: 
 C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/mathf.h: 
 C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include/unaccess.h: 

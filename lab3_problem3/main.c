@@ -32,6 +32,7 @@ float magnitude = 0;
 float avg = 0;
 int coeff=0;
 double spectrum[BUFFERSIZE];
+double *spectral_mag[BUFFERSIZE];
 double mfcc_result[13]={0};
 float llh;
 GMM gmm[1]; // create GMM model
@@ -99,7 +100,6 @@ int main() {
 					// (P3). FFT: B is input and output, w is twiddle factors
 					fft(B, M, w);
 					// (P3). Find 13 MFCC coefficients
-					double *spectral_mag[BUFFERSIZE];
 					for(mm=0; mm<M; mm++){
 						*spectral_mag[mm] = (double) pow((pow(B[mm].real, 2) + pow(B[mm].imag, 2)), 0.5);
 					}
@@ -111,6 +111,7 @@ int main() {
 				}
 
 				// (P3). Print GMM score using gmm model and mfcc_result
+				double llh = gmm_score(gmm, mfcc_result, sizeof(mfcc_result));
 
 			}
 			startflag = 0;
