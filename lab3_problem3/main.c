@@ -36,17 +36,16 @@ double mfcc_result[13]={0};
 float llh;
 GMM gmm[1]; // create GMM model
 
-volatile union {
-	Uint16 sh;
-	Uint8 i8[2];
-} UARTin;
-
 int main() {
 	int K = 3; // Number of Classes
 	int N = 1; // Number of Blocks
 	int D = 13; // Number of Features
+
 	DSP_Init();
+
 	int ii, mm, bb, ll;
+
+	Init_UART2(115200); // set baudrate
 
   	// Initialize GMM model
 	gmm_new(gmm, K, D, "diagonal");
@@ -54,9 +53,20 @@ int main() {
 	gmm_set_regularization_value(gmm, 1e-6);
 	gmm_set_initialization_method(gmm, "random");
 	// (P3). Update GMM parameters (gmm[0]) through UART communication with Matlab
-	Init_UART2(115200); // set baudrate
-
-	UARTin = Read_UART2(); // store received data
+	if(IsDataReady_UART2()){
+		int i;
+		for (i = 0; i < D; i++) {
+			gmm[0].means[i] = Read_UART2();
+		}
+		int j;
+		for (j = 0; j < K; j++) {
+			gmm[0].weights[j] = Read_UART2();
+		}
+		int k;
+		for (k = 0; k < K; k++) {
+			gmm[0].covars[k] = Read_UART2(); // variances
+		}
+	}
 
   	// Twiddle factor
 	for(ii=0; ii<M; ii++){
