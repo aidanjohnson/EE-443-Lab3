@@ -60,5 +60,4 @@ Uint32 CheckForOverrun();
 // defined in StartUp.c (in application directory)
 void   StartUp();
 
-
 #endif

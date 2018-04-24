@@ -1,5 +1,5 @@
 // Welch, Wright, & Morrow, 
-// Real-time Digital Signal Processing, 2011
+// Real-time Digital Signal Processing, 2012
 
 ///////////////////////////////////////////////////////////////////////
 // Filename: ISRs.c
@@ -23,9 +23,20 @@ volatile union {
 	Int16 Channel[2];
 } CodecDataIn, CodecDataOut;
 
+struct cmpx                       //complex data structure used by FFT
+    {
+    float real;
+    float imag;
+    };
+typedef struct cmpx COMPLEX;
+
 
 /* add any global variables here */
+extern int startflag;
+extern int kk;
+extern int M;
 
+extern short X[256];
 
 interrupt void Codec_ISR()
 ///////////////////////////////////////////////////////////////////////
@@ -41,28 +52,29 @@ interrupt void Codec_ISR()
 ///////////////////////////////////////////////////////////////////////
 {                    
 	/* add any local variables here */
-	float xLeft, xRight, yLeft, yRight;
-
 
  	if(CheckForOverrun())					// overrun error occurred (i.e. halted DSP)
 		return;								// so serial port is reset to recover
 
   	CodecDataIn.UINT = ReadCodecData();		// get input data samples
-	
+
 	/* add your code starting here */
+	// I added my code here
+	if(kk>M-1){
+         /* (1). Initialize index kk                                            */
+		kk=0;
+         /* (2). Change startflag to start processing in while loop in main()   */
+		startflag = 1;
+	}
 
-	// this example simply copies sample data from in to out
-	xLeft  = CodecDataIn.Channel[ LEFT];
-	xRight = CodecDataIn.Channel[ RIGHT];
-
-	yLeft  = xLeft;
-	yRight = xRight;
-
-	CodecDataOut.Channel[ LEFT] = yLeft;
-	CodecDataOut.Channel[RIGHT] = yRight;
-
+	if(!startflag){
+         /* (1). Put a new data to the buffer X    */
+		X[kk] = CodecDataIn.Channel[0];
+         /* (2). Update index kk                   */
+		kk++;
+       }
+	// end of my code
 	/* end your code here */
 
-	WriteCodecData(CodecDataOut.UINT);		// send output data to  port
+	WriteCodecData(CodecDataIn.UINT);		// send output data to  port
 }
-
