@@ -10,6 +10,19 @@ Status: In Progress
 - gmm_traning.m
 - Find the GMM parameters of the features found in Problem 1 to cluster the features.
 
+GMM parameters: In Matlab, 'CovarianceType', 'diagonal' to generate k times D covariances, where k is the number of classes, and D is the number of features.
+
+```MATLAB
+GMModel = fitgmdist(X,k,'CovarianceType','diagonal');
+```
+
+|            | Matlab              | gmm.c       |
+| ---------- | ------------------- | ----------- |
+| Means      | GMModel.mu          | GMM.means   |
+| Variances  | GMModel.Sigma       | GMM.covars  |
+| Weights    | GMModel.PComponents | GMM.weights |
+
+
 ## Problem 3: (LCDK) Classification of Bird sound using GMM
 Status: In Progress
 - gmm_write.m
@@ -20,6 +33,29 @@ Status: In Progress
 Status: In Progress
 - svm_training.m
 - Train the SVM model using the features found in Problem 1.
+
+SVM parameters: In Matlab, 'SaveSupportVectors', 'on' helps to save the support vectors in a SVM model.
+
+```MATLAB
+t = templateSVM('SaveSupportVectors','on')
+Mdl = fitcecoc(X,Y,'Learners',t);
+```
+
+|                           | Matlab                                            | svm.cpp         |
+| ------------------------- | ------------------------------------------------- | --------------- |
+| Number of Classes         | 3                                                 | model->nr_class |
+| Support Vectors           | Md1.BinaryLearners{1}.SupportVectors              | model->SV       |
+|                           | Md1.BinaryLearners{2}.SupportVectors              |                 |
+|                           | Md1.BinaryLearners{3}.SupportVectors              |                 |
+| Number of Support Vectors | length(SVMmodel.BinaryLearners{1}.SupportVectors) | model->nSV      |
+|                           | length(SVMmodel.BinaryLearners{2}.SupportVectors) |                 |
+|                           | length(SVMmodel.BinaryLearners{3}.SupportVectors) |                 |
+| Alpha                     | Md1.BinaryLearners{1}.Alpha                       | model->sv_coef  |
+|                           | Md1.BinaryLearners{2}.Alpha                       |                 |
+|                           | Md1.BinaryLearners{3}.Alpha                       |                 |
+| Bias                      | Md1.BinaryLearners{1}.Bias                        | model->rho      |
+|                           | Md1.BinaryLearners{2}.Bias                        |                 |
+|                           | Md1.BinaryLearners{3}.Bias                        |                 |
 
 ## Problem 5: (LCDK) Classification of Bird sound using SVM
 Status: Started
