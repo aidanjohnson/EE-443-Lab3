@@ -155,7 +155,7 @@ double gmm_score(GMM *gmm, const double *X, int N)
 		temp[0] = temp[0] + gmm->P_k_giv_xt[0*N+n];
 		temp[1] = temp[1] + gmm->P_k_giv_xt[1*N+n];
 		temp[2] = temp[2] + gmm->P_k_giv_xt[2*N+n];
-		//IPrintf("%d: pro1 %lf, pro2 %lf, pro3 %lf\n", n, gmm->P_k_giv_xt[0*N+n], gmm->P_k_giv_xt[1*N+n], gmm->P_k_giv_xt[2*N+n]);
+		//printf("%d: pro1 %lf, pro2 %lf, pro3 %lf\n", n, gmm->P_k_giv_xt[0*N+n], gmm->P_k_giv_xt[1*N+n], gmm->P_k_giv_xt[2*N+n]);
 	}
 
 	printf("P1 %lf, P2 %lf, P3 %lf\n", temp[0]/N, temp[1]/N, temp[2]/N);

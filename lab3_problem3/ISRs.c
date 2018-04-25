@@ -24,6 +24,8 @@ extern int kk;
 #define M 256
 extern short X[M];
 
+int gain = 10;
+
 volatile union {
 	Uint32 UINT;
 	Int16 Channel[2];
@@ -55,14 +57,14 @@ interrupt void Codec_ISR()
 
 	CodecDataIn.UINT = ReadCodecData(); // get input data samples
 	
-	if(kk>M-1){
+	if(kk>=M){
 		kk = 0;
 		startflag = 1;
 	}
 
 	if(!startflag){
 		// P3 Put a new data to the buffer X
-		X[kk] = 0.5*(CodecDataIn.Channel[LEFT] + CodecDataIn.Channel[RIGHT]);
+		X[kk] = gain*0.5*(CodecDataIn.Channel[LEFT] + CodecDataIn.Channel[RIGHT]);
 		kk++;
 	}
 

@@ -40,10 +40,10 @@ typedef struct _GMM
 	CovType cov_type;			// Covariance type
 	/* --------------------------- GMM Parameters */
 	double weights[3];			// Component weights
-	double means[13]; 			// Component means
-	double covars[13];			// Component covariances
+	double means[39]; 			// Component means
+	double covars[39];			// Component covariances
 	/* ---------------------- Auxiliary variables */
-	double P_k_giv_xt[30];		// Membership probability matrix
+	double P_k_giv_xt[13];		// Membership probability matrix
 } GMM;
 
 /*

@@ -164,8 +164,8 @@ int main() {
 					}
 				}
 
-				// (P3). Print GMM score using gmm model and mfcc_result
-				double llh = gmm_score(gmm, mfcc_result, N);
+				// (P3). Print GMM score using gmm model and mfcc_result for 1 21 ms frame
+				double llh = gmm_score(gmm, mfcc_result, 1);
 			}
 			startflag = 0;
 		}
