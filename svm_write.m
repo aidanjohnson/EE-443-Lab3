@@ -1,38 +1,45 @@
-close all; clear all;
-delete(instrfindall);
-s = serial('COM7', 'BaudRate',115200);
-set(s,'InputBufferSize',1024);
-fopen(s);
+close all;
+clear all;
+% delete(instrfindall);
+% s = serial('COM7', 'BaudRate',115200);
+% set(s,'InputBufferSize',1024);
+% fopen(s);
 
 load('SVMModel.mat');
 load('Md1.mat');
 
 class = 3;
-sendUART(class, s);
+% sendUART(class, s);
 
+nsv = [0,0,0];
 for n = 1:3
-    sv = Md1.BinaryLearners{n}.SupportVectors;
-    sendUART(sv, s);
-
+    nsv(n) = size(Md1.BinaryLearners{n}.SupportVectors, 1);
+%     sendUART(nsv, s);
 end
 
 for n = 1:3
-    nsv = length(SVMModel.BinaryLearners{n}.SupportVectors);
-    sendUART(nsv, s);
+    for i = 1:nsv(n)
+        for j = 1:13
+            sv = Md1.BinaryLearners{n}.SupportVectors(i,j);
+%             sendUART(sv, s);
+        end
+    end
 end
 
 for n = 1:3
-    sv_coef = Md1.BinaryLearners{n}.Alpha;
-    sendUART(sv_coef, s);
+    for i = 1:nsv(n)
+        sv_coef = Md1.BinaryLearners{n}.Alpha(i);
+%         sendUART(sv_coef, s);
+    end
 end
 
 for n = 1:3
     rho = Md1.BinaryLearners{n}.Bias;
-    sendUART(rho, s);
+%     sendUART(rho, s);
 end
  
-fclose(s);
-delete(s);
+% fclose(s);
+% delete(s);
 
 function [] = sendUART(x, s)
     flag = 0;
