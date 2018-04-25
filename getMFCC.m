@@ -25,6 +25,10 @@ function [mfccs] = getMFCC(file, mkFig)
     dur = size(y,1); % sample length of audio input
     t = (0:dur-1)*(1/Fs); % time vector for file sampling frequency in Hz
     
+    if (ch == 1)
+        y_mono = y;
+    end
+    
     % Convert stereo to mono
     if (ch >= 2)
         y_mono = zeros(dur,1);

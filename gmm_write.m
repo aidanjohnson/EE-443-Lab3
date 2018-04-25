@@ -16,15 +16,15 @@ GMMvariances = zeros(1,size(vars,3)*size(vars,2));
 for k = 1:size(means,1)
     GMMmeans(size(means,2)*(k-1)+1:size(means,2)*k) = means(k,:);
 end
-% sendUART(GMMmeans, s);
+sendUART(GMMmeans, s);
 
 GMMweights = weights;
-% sendUART(GMMweights, s);
+sendUART(GMMweights, s);
 
 for k = 1:size(vars,3)
     GMMvariances(size(vars,2)*(k-1)+1:size(vars,2)*k) = diag(vars(:,:,k));
 end
-% sendUART(GMMvariances, s);
+sendUART(GMMvariances, s);
 
 fclose(s);
 delete(s);
@@ -34,7 +34,6 @@ function [] = sendUART(x, s)
     y = typecast(x,'uint8'); % uint8 array 
     for ii=1:length(y)
         fwrite(s, y(ii));
-%         pause(1);
         while(1)
             flag = fread(s,1,'uint8');
             if(flag==1) % waiting for ACK from LCDK
