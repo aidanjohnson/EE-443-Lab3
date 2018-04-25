@@ -23,15 +23,15 @@ int startflag = 1;
 
 int training = 1;
 short X[BUFFERSIZE];
-COMPLEX w[BUFFERSIZE];
-COMPLEX B[BUFFERSIZE];
+COMPLEX w[BUFFERSIZE]; // twiddle factors
+COMPLEX B[BUFFERSIZE]; // spectrum i/o
 float feature;
 float denominator = 0;
 float numerator = 0;
 float magnitude = 0;
 float avg = 0;
 int coeff=0;
-double spectrum[BUFFERSIZE];
+double spectrum[BUFFERSIZE]; // magnitude of spectrum
 double mfcc_result[13]={0};
 float llh;
 GMM gmm[1]; // create GMM model
@@ -40,6 +40,7 @@ double means[39] = {55.41294813,2.252788404,-0.556662682,-7.423346771,-2.4747679
 double covars[39] = {14.55488607,19.5989198,24.1538145,8.509932438,12.25040987,23.48955831,29.49280116,35.29366191,37.01939496,21.94673472,26.12472438,33.67127647,27.89471426,195.9791879,73.66429411,40.00177001,54.63798984,15.42211561,47.52862031,25.80038408,41.92995756,29.59812576,16.81655519,76.11054092,30.02538184,44.98519358,7.530712698,22.10078845,69.46993089,47.1234126,17.09509342,21.61947041,11.85253675,37.75127115,45.9313067,10.573994,44.63550722,24.98639858,43.87903994};
 double weights[3] = {0.345198288134232,0.189372178821439,0.465429533044329};
 
+// stores 8-bit segments of double (64-bit) data
 volatile union {
 	double sh;
 	Uint8 i8[8];
@@ -55,6 +56,7 @@ void storeGMM(int index, int param)
 		gmm[0].covars[index] = covars[index];
 	}
 
+	// UART input
 //	int iter = 0;
 //	while (iter < 8) {
 //		if(IsDataReady_UART2()){
@@ -75,27 +77,9 @@ void storeGMM(int index, int param)
 //	}
 }
 
-void initializeGMM(GMM *gmm, int K, int D)
+void modelGM(int K, int D)
 {
-  	// Initialize GMM model
-	gmm_new(gmm, K, D, "diagonal");
-	gmm_set_convergence_tol(gmm, 1e-6);
-	gmm_set_regularization_value(gmm, 1e-6);
-	gmm_set_initialization_method(gmm, "random");
-}
-
-int main() {
-	int K = 3; // Number of Classes
-	int N = 1; // Number of Blocks
-	int D = 13; // Number of Features
-
-	DSP_Init();
-
-	int ii, mm, bb, ll;
-
-	Init_UART2(115200); // set baudrate
-
-	initializeGMM(gmm, K, D);
+	// Get GM model mean, weights, variances
 	int i;
 	for (i = 0; i < D*K; i++) {
 		storeGMM(i, 1);
@@ -106,14 +90,42 @@ int main() {
 	}
 	int k;
 	for (k = 0; k < D*K; k++) {
-		storeGMM(k, 3); // variances
+		storeGMM(k, 3);
 	}
+}
 
-  	// Twiddle factor
+void initializeGMM(int K, int D)
+{
+  	// Initialize GM model
+	gmm_new(gmm, K, D, "diagonal");
+	gmm_set_convergence_tol(gmm, 1e-6);
+	gmm_set_regularization_value(gmm, 1e-6);
+	gmm_set_initialization_method(gmm, "random");
+
+	modelGM(K, D);
+}
+
+void twiddleFactors()
+{
+	int ii;
+  	// Gets twiddle factor
 	for(ii=0; ii<M; ii++){
 		w[ii].real = cos((float)ii/(float)M*PI);
 		w[ii].imag = sin((float)ii/(float)M*PI);
 	}
+}
+
+int main() {
+	int K = 3; // Number of Classes
+	int N = 1; // Number of Blocks
+	int D = 13; // Number of Features
+	int mm, bb, ll;
+
+	DSP_Init();
+
+	Init_UART2(115200); // set baudrate
+	initializeGMM(K, D); // get GM model
+	twiddleFactors();
 
 	// main stalls here, interrupts drive operation
 	while(1) {
@@ -141,7 +153,9 @@ int main() {
 					fft(B, M, w);
 					// (P3). Find 13 MFCC coefficients
 					for(mm=0; mm<M; mm++){
-						spectrum[mm] = sqrt((pow((double) B[mm].real, 2) + pow((double) B[mm].imag, 2)));
+						double re = (double) B[mm].real;
+						double im = (double) B[mm].imag;
+						spectrum[mm] = sqrt(re*re + im*im);
 					}
 					int fs = GetSampleFreq();
 					int coeff;
