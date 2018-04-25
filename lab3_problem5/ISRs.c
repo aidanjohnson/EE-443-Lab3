@@ -60,7 +60,7 @@ interrupt void Codec_ISR()
 
 	/* add your code starting here */
 	// I added my code here
-	if(kk>M-1){
+	if(kk>=M){
          /* (1). Initialize index kk                                            */
 		kk=0;
          /* (2). Change startflag to start processing in while loop in main()   */

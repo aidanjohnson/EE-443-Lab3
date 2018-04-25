@@ -44,6 +44,12 @@ void initialization();
 void read_problem(double *featureVector, int *label,int N, int D);
 void do_cross_validation();
 
+// stores 8-bit segments of double (64-bit) data
+volatile union {
+	double sh;
+	Uint8 i8[8];
+} UARTdouble;
+
 // Predict
 int max_nr_attr = 64;
 int predict_probability=0;
@@ -64,6 +70,7 @@ int main()
   // Initialize SVM model
   initialization();
   // (P5). SVM training through UART communication with Matlab
+  modelSVM(K, D);
 
   // Check SVM parameters
   svm_check_parameter(&prob,&param);
@@ -103,13 +110,22 @@ int main()
         			  B[ll].imag = 0;
         		  }
         		  // (P5). FFT: B is input and output, w is twiddle factors
-
+                  fft(B, M, w);
 				  // (P5). Features for SVM: MFCC
-
+                  for(mm=0; mm<M; mm++){
+                      double re = (double) B[mm].real;
+                      double im = (double) B[mm].imag;
+                      spectrum[mm] = sqrt(re*re + im*im);
+                  }
+                  int fs = GetSampleFreq();
+                  int coeff;
+                  for (coeff = 0; coeff < D; coeff++) {
+                      mfcc_result[coeff] = GetCoefficient(spectrum, fs, numFilters, M, coeff);
+                  }
         	  }
 			  svm_check_probability_model(model);
 			  // (P5). Print SVM classification results
-
+              predict(mfcc_result, N, D);
           }
         startflag = 0;
       }
@@ -175,6 +191,64 @@ void initialization()
 	param.weight = NULL;
 	cross_validation = 0;
 }
+
+void storeSVM(int index1, int index2, int param)
+{
+	// UART input
+	int iter = 0;
+	while (iter < 8) {
+		if(IsDataReady_UART2()){
+			UARTdouble.i8[iter++] = Read_UART2();
+			if(iter==8){
+				if (param == 1) {
+					model->nr_class = UARTdouble.sh;
+				} else if (param == 2) {
+					model->nSV[index1] = UARTdouble.sh;
+				} else if (param == 3) {
+					model->SV[index1].index = index1;
+                    model->SV[index1].value[index2] = UARTdouble.sh;
+				} else if (param == 4) {
+					model->sv_coef[index1][index2] = UARTdouble.sh;
+				} else if (param == 5) {
+					model->rho[index1] = UARTdouble.sh;
+				}
+            }
+			while(IsTxReady_UART2()==0) ;
+			Write_UART2(1);
+			wait(10000);
+		}
+	}
+}
+
+void modelSVM(int K, int D) 
+{
+	// Get SVM model parameters
+    storeSVM(0, 0, 1); // number of classes
+	int i;
+	for (i = 0; i < model->nr_class; i++) {
+		storeGMM(i, 0, 2); // number of support vectors
+	}
+    int class;
+	for(class = 0; class < mode->nr_class; class++) {
+        int sv;
+        for(sv = 0; sv < model->nSV[class]; sv++) {
+            int j;
+            for(j = 0; j < D; j++) {
+                storeSVM(class, sv*D+j, 3); // support vectors
+            }
+        }
+	}
+	for(class = 0; class < mode->nr_class; class++) {
+        int sv;
+        for(sv = 0; sv < model->nSV[class]; sv++) {
+            storeSVM(class, sv, 4); // alpha sv coefficients
+        }
+	}
+    for(class = 0; class < mode->nr_class; class++) {
+        store(class, 5); // rho bias
+    }
+}
+
 // read in a problem (in svmlight format)
 void read_problem(double *featureVector, int *label, int N, int D)
 {
