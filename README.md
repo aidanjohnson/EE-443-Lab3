@@ -26,7 +26,7 @@ GMModel = fitgmdist(X,k,'CovarianceType','diagonal');
 ## Problem 3: (LCDK) Classification of Bird sound using GMM
 Status: In Progress
 - gmm_write.m
-- lab3_problem3 directory--main.c WIP, [trying to figure out how the .mat object is sent by UART](https://github.com/aidanjohnson/EE-443-Lab3/blob/master/EE443_2018_Lab3.pdf)
+- lab3_problem3 directory (main.c & ISRs.c)--gmm.h array lengths for means, covars, P(k|x) changed to 39; not sure why JP hard coded it and changed it from the memory allocation performed by the original.
 - Use GMM model trained in Problem 2 to classify the Bird sound received through Line input of LCDK.
 
 ## Problem 4: (Matlab) Training [SVM](https://www.mathworks.com/help/stats/fitcecoc.html) for Bird sound classification
@@ -60,5 +60,5 @@ Mdl = fitcecoc(X,Y,'Learners',t);
 ## Problem 5: (LCDK) Classification of Bird sound using SVM
 Status: Started
 - svm_write.m
-- lab3_problem5 directory
+- lab3_problem5 directory (main.c & ISRs.c)
 - SVM to classify the features. Use MFCC features to classify Bird sounds.
