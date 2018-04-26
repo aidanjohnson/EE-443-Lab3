@@ -1,1 +1,1 @@
-"./ISRs.obj" "./LCDK_Support_DSP.obj" "./StartUp.obj" "./gmm.obj" "./libmfcc.obj" "./main.obj" "./vectors.obj" "../link6748.cmd" -l"libc.a" 
+"./ISRs.obj" "./LCDK_Support_DSP.obj" "./StartUp.obj" "./assem.obj" "./autocorr.obj" "./flip.obj" "./gmm.obj" "./libmfcc.obj" "./main.obj" "./svm.obj" "./vectors.obj" "../link6748.cmd" -llibc.a 
