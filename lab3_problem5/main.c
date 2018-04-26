@@ -13,6 +13,7 @@
 //#define PI 3.141592
 #define BUFFERSIZE 256
 int M=BUFFERSIZE;
+#define numFilters 48
 
 int kk=0;
 int startflag = 0;
@@ -41,6 +42,8 @@ int cross_validation;
 int nr_fold;
 
 void initialization();
+void modelSVM(int K, int D);
+void storeSVM(int index1, int index2, int param);
 void read_problem(double *featureVector, int *label,int N, int D);
 void do_cross_validation();
 
@@ -205,8 +208,10 @@ void storeSVM(int index1, int index2, int param)
 				} else if (param == 2) {
 					model->nSV[index1] = UARTdouble.sh;
 				} else if (param == 3) {
-					model->SV[index1].index = index1;
-                    model->SV[index1].value[index2] = UARTdouble.sh;
+					struct svm_node svm;
+					svm.index = index1;
+                    svm.value = UARTdouble.sh;
+                    model->SV[index2] = &svm;
 				} else if (param == 4) {
 					model->sv_coef[index1][index2] = UARTdouble.sh;
 				} else if (param == 5) {
@@ -226,10 +231,10 @@ void modelSVM(int K, int D)
     storeSVM(0, 0, 1); // number of classes
 	int i;
 	for (i = 0; i < model->nr_class; i++) {
-		storeGMM(i, 0, 2); // number of support vectors
+		storeSVM(i, 0, 2); // number of support vectors
 	}
     int class;
-	for(class = 0; class < mode->nr_class; class++) {
+	for(class = 0; class < model->nr_class; class++) {
         int sv;
         for(sv = 0; sv < model->nSV[class]; sv++) {
             int j;
@@ -238,14 +243,14 @@ void modelSVM(int K, int D)
             }
         }
 	}
-	for(class = 0; class < mode->nr_class; class++) {
+	for(class = 0; class < model->nr_class; class++) {
         int sv;
         for(sv = 0; sv < model->nSV[class]; sv++) {
             storeSVM(class, sv, 4); // alpha sv coefficients
         }
 	}
-    for(class = 0; class < mode->nr_class; class++) {
-        store(class, 5); // rho bias
+    for(class = 0; class < model->nr_class; class++) {
+        storeSVM(class, 0, 5); // rho bias
     }
 }
 
