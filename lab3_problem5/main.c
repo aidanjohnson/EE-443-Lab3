@@ -217,6 +217,7 @@ void storeSVM(int index1, int index2, int param)
 				} else if (param == 5) {
 					model->rho[index1] = UARTdouble.sh;
 				}
+                printf("Index: %d, Received double: %lf \n", ii, UARTdouble.sh);
             }
 			while(IsTxReady_UART2()==0) ;
 			Write_UART2(1);

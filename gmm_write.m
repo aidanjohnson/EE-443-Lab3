@@ -31,15 +31,14 @@ delete(s);
 
 function [] = sendUART(x, s)
     flag = 0;
-    y = typecast(x,'uint8'); % uint8 array 
-    for ii=1:length(y)
+    ii = 1;
+    y = typecast(x,'uint8') % uint8 array 
+    while ii<=length(y)
         fwrite(s, y(ii));
-        while(1)
-            flag = fread(s,1,'uint8');
-            if(flag==1) % waiting for ACK from LCDK
-                flag = 0;
-                break;
-            end
+        flag = fread(s,1,'uint8');
+        if(flag==1)
+            flag = 0;
+            ii = ii + 1;
         end
     end
 end
