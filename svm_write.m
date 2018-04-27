@@ -1,45 +1,68 @@
 close all;
 clear all;
-delete(instrfindall);
-s = serial('COM7', 'BaudRate',115200);
-set(s,'InputBufferSize',1024);
-fopen(s);
+% delete(instrfindall);
+% s = serial('COM7', 'BaudRate',115200);
+% set(s,'InputBufferSize',1024);
+% fopen(s);
 
 load('SVMModel.mat');
 load('Md1.mat');
 
 class = 3;
-sendUART(class, s);
+% sendUART(class, s);
 
-nsv = [0,0,0];
+
 for n = 1:3
-    nsv(n) = size(Md1.BinaryLearners{n}.SupportVectors, 1);
-    sendUART(nsv, s);
+    nsv = size(Md1.BinaryLearners{n}.SupportVectors, 1);
+    numberSV(n) = nsv;
+%     sendUART(nsv, s);
 end
 
+k = 1;
 for n = 1:3
-    for i = 1:nsv(n)
+    for i = 1:numberSV(n)
         for j = 1:13
             sv = Md1.BinaryLearners{n}.SupportVectors(i,j);
-            sendUART(sv, s);
+            supportVectors(k) = sv;
+            k = k + 1;
+%             sendUART(sv, s);
         end
     end
 end
 
+k = 1;
 for n = 1:3
-    for i = 1:nsv(n)
+    for i = 1:numberSV(n)
         sv_coef = Md1.BinaryLearners{n}.Alpha(i);
-        sendUART(sv_coef, s);
+        coefficientsSV(k) = sv_coef;
+        k = k + 1;
+%         sendUART(sv_coef, s);
     end
 end
 
 for n = 1:3
     rho = Md1.BinaryLearners{n}.Bias;
-    sendUART(rho, s);
+    bias(n) = rho;
+%     sendUART(rho, s);
 end
 
-fclose(s);
-delete(s);
+% fclose(s);
+% delete(s);
+
+printTXT('SVMclass.txt',class);
+printTXT('SVMn.txt',numberSV);
+printTXT('SVM.txt',supportVectors);
+printTXT('SVMcoef.txt',coefficientsSV);
+printTXT('SVMrho.txt',bias);
+
+function [] = printTXT(name, out)
+    fileID = fopen(name,'w');
+    fprintf(fileID,'{%f',out(1));
+    if length(out) > 1
+        fprintf(fileID,',%f',out(2:end));
+    end
+    fprintf(fileID,'}');
+end
 
 function [] = sendUART(x, s)
     flag = 0;

@@ -20,22 +20,24 @@ function [mfccs] = getMFCC(file, mkFig)
     % Load audio signal
     [y, Fs] = audioread(file);
     % y = y(1:Fs*4,:); % only 4 s of sample
-
+    
     ch = size(y,2); % number of audio channels
     dur = size(y,1); % sample length of audio input
     t = (0:dur-1)*(1/Fs); % time vector for file sampling frequency in Hz
     
+    % Convert stereo to mono
     if (ch == 1)
         y_mono = y;
-    end
-    
-    % Convert stereo to mono
-    if (ch >= 2)
+    else
         y_mono = zeros(dur,1);
         for i = 1:ch
            y_mono = y_mono + y(:,i)/ch; 
         end
     end
+    
+    % normalize audio
+    y_max = max(y_mono);
+    y_mono = y_mono./y_max;
     
     Tw = 21; % analysis frame duration (ms)
     Ts = 10; % analysis frame shift (ms) -- 10.48 for 380x13 4 s
