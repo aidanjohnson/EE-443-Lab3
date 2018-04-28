@@ -54,6 +54,8 @@ printTXT('SVMn.txt',numberSV);
 printTXT('SVM.txt',supportVectors);
 printTXT('SVMcoef.txt',coefficientsSV);
 printTXT('SVMrho.txt',bias);
+params = [class, numberSV, supportVectors, coefficientsSV, bias];
+printTXT('SVM_class_n_sv_coef_bias', params);
 
 function [] = printTXT(name, out)
     fileID = fopen(name,'w');
