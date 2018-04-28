@@ -197,41 +197,41 @@ void initialization()
 	cross_validation = 0;
 }
 
-void storeSVM(int index1, int index2, int param)
-{
-	// UART input
-	int iter = 0;
-	while (iter < 8) {
-		if(IsDataReady_UART2()){
-			UARTdouble.i8[iter++] = Read_UART2();
-			if(iter==8){
-				if (param == 1) {
-					model->nr_class = UARTdouble.sh;
-				} else if (param == 2) {
-					model->nSV[index1] = UARTdouble.sh;
-				} else if (param == 3) {
-					struct svm_node svm;
-					svm.index = index1;
-                    svm.value = UARTdouble.sh;
-                    model->SV[index2] = &svm;
-				} else if (param == 4) {
-					model->sv_coef[index1][index2] = UARTdouble.sh;
-				} else if (param == 5) {
-					model->rho[index1] = UARTdouble.sh;
-				}
-                printf("Index: %d, Received double: %lf \n", ii, UARTdouble.sh);
-            }
-			while(IsTxReady_UART2()==0) ;
-			Write_UART2(1);
-			wait(10000);
-		}
-	}
-}
+//void storeSVM(int index1, int index2, int param)
+//{
+//	// UART input
+//	int iter = 0;
+//	while (iter < 8) {
+//		if(IsDataReady_UART2()){
+//			UARTdouble.i8[iter++] = Read_UART2();
+//			if(iter==8){
+//				if (param == 1) {
+//					model->nr_class = UARTdouble.sh;
+//				} else if (param == 2) {
+//					model->nSV[index1] = UARTdouble.sh;
+//				} else if (param == 3) {
+//					struct svm_node svm;
+//					svm.index = index1;
+//                    svm.value = UARTdouble.sh;
+//                    model->SV[index2] = &svm;
+//				} else if (param == 4) {
+//					model->sv_coef[index1][index2] = UARTdouble.sh;
+//				} else if (param == 5) {
+//					model->rho[index1] = UARTdouble.sh;
+//				}
+//                printf("Index: %d, Received double: %lf \n", ii, UARTdouble.sh);
+//            }
+//			while(IsTxReady_UART2()==0) ;
+//			Write_UART2(1);
+//			wait(10000);
+//		}
+//	}
+//}
 
 void modelSVM(int K, int D) 
 {
 	// Get SVM model parameters
-    svm_read_model(params, 357, param);
+    svm_read_model(params, 357, &param);
 
     // uncomment for UART transfer
 //	// Get SVM model parameters
