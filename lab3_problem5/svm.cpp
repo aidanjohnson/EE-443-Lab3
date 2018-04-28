@@ -348,7 +348,7 @@ double Kernel::k_function(const svm_node *x, const svm_node *y,
 					}
 				}
 			}
-
+/*
 			while(x->index != -1)
 			{
 				sum += x->value * x->value;
@@ -360,7 +360,7 @@ double Kernel::k_function(const svm_node *x, const svm_node *y,
 				sum += y->value * y->value;
 				++y;
 			}
-			
+*/
 			return exp(-param.gamma*sum);
 		}
 		case SIGMOID:
@@ -2522,16 +2522,19 @@ double svm_predict_values(const svm_model *model, const svm_node *x, double* dec
 		int nr_class = model->nr_class;
 		int l = model->l;
 		
-		double *kvalue = Malloc(double,l);
+		//double *kvalue = Malloc(double,l);
+		double kvalue[50];
 		for(i=0;i<l;i++)
 			kvalue[i] = Kernel::k_function(x,model->SV[i],model->param);
 
-		int *start = Malloc(int,nr_class);
+		//int *start = Malloc(int,nr_class);
+		int start[3];
 		start[0] = 0;
 		for(i=1;i<nr_class;i++)
 			start[i] = start[i-1]+model->nSV[i-1];
 
-		int *vote = Malloc(int,nr_class);
+		//int *vote = Malloc(int,nr_class);
+		int vote[3];
 		for(i=0;i<nr_class;i++)
 			vote[i] = 0;
 
@@ -2882,6 +2885,66 @@ bool read_model_header(FILE *fp, svm_model* model)
 
 	return true;
 
+}
+
+svm_model *svm_read_model(double *param, int kkk, const svm_parameter *svmparam)
+{
+	// read parameters
+	svm_model *model = Malloc(svm_model,1);
+	model->param = *svmparam;
+	model->rho = Malloc(double,kkk);
+	model->probA = NULL;
+	model->probB = NULL;
+	model->sv_indices = NULL;
+	model->label = Malloc(int, 3);
+	model->nSV = Malloc(int, kkk);
+
+	// read sv_coef and SV
+	int pp, k;
+	int D = 13;
+	int rr=0;
+	model->nr_class = param[pp++];
+	for(pp=0;pp<model->nr_class;pp++){
+		model->rho[pp] = param[rr++];
+		model->label[pp] = pp;
+	}
+	model->l = 0;
+	for(pp=0;pp<model->nr_class;pp++){
+		model->nSV[pp] = param[rr++];
+		model->l += model->nSV[pp];
+	}
+
+	int m = model->nr_class;
+	int l = model->l;
+
+	model->sv_coef = Malloc(double *,m);
+	int i;
+	for(i=0;i<m;i++)
+		model->sv_coef[i] = Malloc(double,l);
+
+	for(k=0;k<m;k++){
+		for(i=0;i<model->nSV[k];i++){
+			model->sv_coef[k][i] = param[rr++];
+		}
+	}
+
+	model->SV = Malloc(svm_node*,l);
+	for(i=0;i<l;i++)
+		model->SV[i] = Malloc(svm_node,D+1);
+
+	for(i=0;i<l;i++){
+		for(k=0;k<13;k++){
+			model->SV[i][k].index = k;
+			model->SV[i][k].value = param[rr++];
+		}
+	}
+	for(k=0;k<13;k++){
+		model->SV[i][k].index = -1;
+		model->SV[i][k].value = 0;//param[rr++];
+	}
+
+	model->free_sv = 1;	// XXX
+	return model;
 }
 
 svm_model *svm_load_model(const char *model_file_name)
