@@ -1,0 +1,859 @@
+******************************************************************************
+               TMS320C6x Linker PC v7.4.14                     
+******************************************************************************
+>> Linked Sun Apr 22 02:16:47 2018
+
+OUTPUT FILE NAME:   <mySVM2.out>
+ENTRY POINT SYMBOL: "_c_int00"  address: 1183a6c0
+
+
+MEMORY CONFIGURATION
+
+         name            origin    length      used     unused   attr    fill
+----------------------  --------  ---------  --------  --------  ----  --------
+  VECTORS               11800000   00000200  00000200  00000000  RWIX
+  DSPRAM                11800200   0003fe00  0003de4e  00001fb2  RWIX
+  SHAREDRAM             80000000   00020000  00000000  00020000  RWIX
+  SDRAM                 c0000000   08000000  00000000  08000000  RWIX
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+vectors    0    11800000    00000200     
+                  11800000    00000200     vectors.obj (vectors)
+
+.sysmem    0    11800200    00020000     UNINITIALIZED
+                  11800200    00000008     rts6740.lib : memory.obj (.sysmem)
+                  11800208    0001fff8     --HOLE--
+
+.text      0    11820200    0001b1c0     
+                  11820200    0000b440     svm.obj (.text)
+                  1182b640    00001480     main.obj (.text)
+                  1182cac0    00000dc0     LCDK_Support_DSP.obj (.text)
+                  1182d880    00000900     rts6740.lib : _scanfi.obj (.text:__scanfi)
+                  1182e180    00000720                 : pow.obj (.text:_pow)
+                  1182e8a0    00000620                 : _scanfi.obj (.text:__sset_arg)
+                  1182eec0    000005a0                 : divd.obj (.text:__divd)
+                  1182f460    00000580                 : _printfi.obj (.text:__getarg_diouxp)
+                  1182f9e0    00000540     libmfcc.obj (.text)
+                  1182ff20    00000520     rts6740.lib : _printfi.obj (.text:__setfield)
+                  11830440    000004c0                 : _scanfi.obj (.text:__sproc_int)
+                  11830900    00000460                 : strtod.obj (.text:_strtod)
+                  11830d60    00000460                 : strtol.obj (.text:_strtol)
+                  118311c0    00000460                 : strtold.obj (.text:_strtold)
+                  11831620    00000460                 : strtoll.obj (.text:_strtoll)
+                  11831a80    00000440                 : _printfi.obj (.text:__printfi)
+                  11831ec0    00000400                 : fgets.obj (.text:__dofgets)
+                  118322c0    00000400                 : strtoul.obj (.text:_strtoul)
+                  118326c0    00000400                 : strtoull.obj (.text:_strtoull)
+                  11832ac0    000003a0                 : fputs.obj (.text:_fputs)
+                  11832e60    00000340                 : _scanfi.obj (.text:__sget_conv)
+                  118331a0    00000320                 : _printfi.obj (.text:__pproc_fge)
+                  118334c0    000002e0                 : _scanfi.obj (.text:__sproc_float)
+                  118337a0    000002e0                 : cos.obj (.text:_cos)
+                  11833a80    000002e0                 : powi.obj (.text:_powi)
+                  11833d60    000002c0                 : _printfi.obj (.text:__pproc_fwp)
+                  11834020    000002c0                 : memory.obj (.text:_realloc)
+                  118342e0    000002a0                 : _printfi.obj (.text:_ecvt)
+                  11834580    000002a0                 : _printfi.obj (.text:_fcvt)
+                  11834820    00000280                 : divf.obj (.text:__divf)
+                  11834aa0    00000280                 : memory.obj (.text:_free)
+                  11834d20    00000280                 : sin.obj (.text:_sin)
+                  11834fa0    00000260                 : imath64.obj (.text:__divull)
+                  11835200    00000260                 : _printfi.obj (.text:__pconv_e)
+                  11835460    00000240                 : _printfi.obj (.text:__pproc_diouxp)
+                  118356a0    00000240     ISRs.obj (.text:retain)
+                  118358e0    00000220     rts6740.lib : _printfi.obj (.text:__pproc_str)
+                  11835b00    00000220                 : fputc.obj (.text:_fputc)
+                  11835d20    00000200                 : _printfi.obj (.text:__pconv_g)
+                  11835f20    00000200                 : log.obj (.text:_log)
+                  11836120    00000200                 : setvbuf.obj (.text:_setvbuf)
+                  11836320    000001e0                 : exp.obj (.text:_exp)
+                  11836500    000001c0                 : _printfi.obj (.text:__mcpy)
+                  118366c0    000001c0                 : fopen.obj (.text:__openfile)
+                  11836880    000001a0                 : imath40.obj (.text:__divul)
+                  11836a20    000001a0                 : _scanfi.obj (.text:__sproc_str)
+                  11836bc0    000001a0                 : tanh.obj (.text:_tanh)
+                  11836d60    00000180                 : trgdrv.obj (.text:_HOSTrename)
+                  11836ee0    00000180                 : fscanf.obj (.text:__chkmbc)
+                  11837060    00000180                 : memory.obj (.text:_malloc)
+                  118371e0    00000180                 : lowlev.obj (.text:_open)
+                  11837360    000000a0                 : trgdrv.obj (.text:_HOSTclose)
+                  11837400    00000180     assem.obj (.text)
+                  11837580    00000160     rts6740.lib : _scanfi.obj (.text:__sproc_lb)
+                  118376e0    00000160                 : ldexp.obj (.text:_ldexp)
+                  11837840    00000140                 : _printfi.obj (.text:__pproc_fflags)
+                  11837980    00000140                 : fgetc.obj (.text:_fgetc)
+                  11837ac0    00000140                 : ftell.obj (.text:_ftell)
+                  11837c00    00000140                 : lowlev.obj (.text:_getdevice)
+                  11837d40    00000140                 : ungetc.obj (.text:_ungetc)
+                  11837e80    00000120                 : _bufread.obj (.text:__buff_read)
+                  11837fa0    00000120                 : fclose.obj (.text:__closefile)
+                  118380c0    00000120                 : _printfi.obj (.text:__ltostr)
+                  118381e0    00000120                 : fopen.obj (.text:__search_fp)
+                  11838300    00000120                 : _scanfi.obj (.text:__sget_scanset)
+                  11838420    00000120                 : frexp.obj (.text:_frexp)
+                  11838540    00000120                 : fseek.obj (.text:_fseek)
+                  11838660    00000100                 : trgdrv.obj (.text:_HOSTlseek)
+                  11838760    00000100                 : _io_perm.obj (.text:__wrt_ok)
+                  11838860    00000100                 : fprintf.obj (.text:_fprintf)
+                  11838960    00000100                 : sqrt.obj (.text:_sqrt)
+                  11838a60    000000e0                 : trgdrv.obj (.text:_HOSTopen)
+                  11838b40    000000e0                 : trgdrv.obj (.text:_HOSTread)
+                  11838c20    000000e0                 : divi.obj (.text:__divi)
+                  11838d00    000000e0                 : atoi.obj (.text:_atoi)
+                  11838de0    000000e0                 : lowlev.obj (.text:_close)
+                  11838ec0    000000e0                 : fflush.obj (.text:_fflush)
+                  11838fa0    000000e0                 : fscanf.obj (.text:_fscanf)
+                  11839080    000000e0                 : memset.obj (.text:_memset)
+                  11839160    000000e0                 : printf.obj (.text:_printf)
+                  11839240    000000c0                 : trgdrv.obj (.text:_HOSTunlink)
+                  11839300    000000c0                 : trgdrv.obj (.text:_HOSTwrite)
+                  118393c0    000000c0                 : autoinit.obj (.text:__auto_init)
+                  11839480    000000c0                 : _printfi.obj (.text:__div)
+                  11839540    000000c0                 : divu.obj (.text:__divu)
+                  11839600    000000c0                 : fflush.obj (.text:__doflush)
+                  118396c0    000000c0                 : _io_perm.obj (.text:__rd_ok)
+                  11839780    000000c0                 : remi.obj (.text:__remi)
+                  11839840    000000c0                 : exit.obj (.text:_exit)
+                  11839900    000000c0                 : ltoa.obj (.text:_ltoa)
+                  118399c0    000000c0                 : strtok.obj (.text:_strtok)
+                  11839a80    000000a0                 : new_.obj (.text:___nw__FUi)
+                  11839b20    000000a0                 : fopen.obj (.text:__cleanup)
+                  11839bc0    000000a0                 : imath40.obj (.text:__divli)
+                  11839c60    000000a0                 : _printfi.obj (.text:__ecpy)
+                  11839d00    000000a0                 : _printfi.obj (.text:__fcpy)
+                  11839da0    000000a0                 : fixdli.obj (.text:__fixdli)
+                  11839e40    000000a0                 : round.obj (.text:__nround)
+                  11839ee0    000000a0                 : _printfi.obj (.text:__pconv_f)
+                  11839f80    000000a0                 : cpy_tbl.obj (.text:_copy_in)
+                  1183a020    000000a0                 : lowlev.obj (.text:_finddevice)
+                  1183a0c0    000000a0                 : lowlev.obj (.text:_lseek)
+                  1183a160    000000a0                 : memcpy64.obj (.text:_memcpy)
+                  1183a200    000000a0                 : memory.obj (.text:_minsert)
+                  1183a2a0    000000a0                 : modf.obj (.text:_modf)
+                  1183a340    000000a0                 : memory.obj (.text:_mremove)
+                  1183a3e0    000000a0                 : lowlev.obj (.text:_read)
+                  1183a480    000000a0                 : strspn.obj (.text:_strspn)
+                  1183a520    000000a0                 : lowlev.obj (.text:_write)
+                  1183a5c0    00000080                 : fltlid.obj (.text:__fltlid)
+                  1183a640    00000080                 : llshift.obj (.text:__llshl)
+                  1183a6c0    00000080                 : boot.obj (.text:_c_int00)
+                  1183a740    00000080                 : memory.obj (.text:_calloc)
+                  1183a7c0    00000080                 : rand.obj (.text:_rand)
+                  1183a840    00000080                 : trgmsg.obj (.text:_readmsg)
+                  1183a8c0    00000080                 : lowlev.obj (.text:_unlink)
+                  1183a940    00000080     autocorr.obj (.text)
+                  1183a9c0    00000060     rts6740.lib : cpp_init.obj (.text:___TI_cpp_init)
+                  1183aa20    00000060                 : imath64.obj (.text:__remull)
+                  1183aa80    00000060                 : imath64.obj (.text:__subcull)
+                  1183aae0    00000060                 : fclose.obj (.text:_fclose)
+                  1183ab40    00000060                 : ferror.obj (.text:_ferror)
+                  1183aba0    00000060                 : fopen.obj (.text:_fopen)
+                  1183ac00    00000060                 : memccpy.obj (.text:_memccpy)
+                  1183ac60    00000060                 : setlocale.obj (.text:_setlocale)
+                  1183acc0    00000060                 : strcspn.obj (.text:_strcspn)
+                  1183ad20    00000060                 : strrchr.obj (.text:_strrchr)
+                  1183ad80    00000060                 : lowlev.obj (.text:_tabinit)
+                  1183ade0    00000060                 : vsprintf.obj (.text:_vsprintf)
+                  1183ae40    00000060                 : trgmsg.obj (.text:_writemsg)
+                  1183aea0    00000040                 : isinf.obj (.text:___isinf)
+                  1183aee0    00000040                 : _printfi.obj (.text:___isnan)
+                  1183af20    00000040                 : args_main.obj (.text:__args_main)
+                  1183af60    00000040                 : frcmpyd_div.obj (.text:__frcmpyd_div)
+                  1183afa0    00000040                 : llshift.obj (.text:__llshru)
+                  1183afe0    00000040                 : vsprintf.obj (.text:__outs)
+                  1183b020    00000040                 : imath40.obj (.text:__remli)
+                  1183b060    00000040                 : imath40.obj (.text:__remul)
+                  1183b0a0    00000040                 : strcmp.obj (.text:_strcmp)
+                  1183b0e0    00000040                 : strlen.obj (.text:_strlen)
+                  1183b120    00000040     flip.obj (.text)
+                  1183b160    00000020     rts6740.lib : error.obj (.text:___abort_execution)
+                  1183b180    00000020                 : newhandler.obj (.text:___default_new_handler__Fv)
+                  1183b1a0    00000020                 : delete.obj (.text:___dl__FPv)
+                  1183b1c0    00000020                 : array_del.obj (.text:___dla__FPv)
+                  1183b1e0    00000020                 : array_new.obj (.text:___nwa__FUi)
+                  1183b200    00000020                 : pure_virt.obj (.text:___pure_virtual_called)
+                  1183b220    00000020                 : fscanf.obj (.text:__inpchar)
+                  1183b240    00000020                 : negll.obj (.text:__negll)
+                  1183b260    00000020                 : _lock.obj (.text:__nop)
+                  1183b280    00000020                 : fprintf.obj (.text:__outc)
+                  1183b2a0    00000020                 : printf.obj (.text:__outc)
+                  1183b2c0    00000020                 : vsprintf.obj (.text:__outc)
+                  1183b2e0    00000020                 : fprintf.obj (.text:__outs)
+                  1183b300    00000020                 : printf.obj (.text:__outs)
+                  1183b320    00000020                 : trunc.obj (.text:__trunc)
+                  1183b340    00000020                 : fscanf.obj (.text:__uninpchar)
+                  1183b360    00000020                 : exit.obj (.text:_abort)
+                  1183b380    00000020                 : fgets.obj (.text:_fgets)
+                  1183b3a0    00000020                 : remove.obj (.text:_remove)
+
+.far       0    1183b3c0    00001568     UNINITIALIZED
+                  1183b3c0    00000e4c     main.obj (.far)
+                  1183c20c    00000004     rts6740.lib : errno.obj (.far)
+                  1183c210    00000324                 : defs.obj (.far)
+                  1183c534    00000004                 : fopen.obj (.far)
+                  1183c538    00000120                 : pow.obj (.far)
+                  1183c658    0000011c                 : lowlev.obj (.far)
+                  1183c774    00000004                 : strtok.obj (.far)
+                  1183c778    00000040                 : cos.obj (.far)
+                  1183c7b8    00000040                 : sin.obj (.far)
+                  1183c7f8    00000034                 : setlocale.obj (.far)
+                  1183c82c    00000004                 : vars.obj (.far)
+                  1183c830    00000030                 : exp.obj (.far)
+                  1183c860    00000030                 : log.obj (.far)
+                  1183c890    00000030                 : tanh.obj (.far)
+                  1183c8c0    00000030     svm.obj (.far)
+                  1183c8f0    0000000c     rts6740.lib : exit.obj (.far)
+                  1183c8fc    00000008     ISRs.obj (.far)
+                  1183c904    00000008     rts6740.lib : _lock.obj (.far)
+                  1183c90c    00000008                 : memory.obj (.far)
+                  1183c914    00000004     --HOLE--
+                  1183c918    00000008                 : rand.obj (.far)
+                  1183c920    00000008                 : trgdrv.obj (.far)
+
+.const     0    1183c928    00000b76     
+                  1183c928    000005d8     svm.obj (.const:.string)
+                  1183cf00    000001ec     main.obj (.const:.string)
+                  1183d0ec    00000002     rts6740.lib : fputs.obj (.const:.string)
+                  1183d0ee    00000002     --HOLE-- [fill = 0]
+                  1183d0f0    00000101                 : ctype.obj (.const:.string:__ctypes_)
+                  1183d1f1    00000005                 : setlocale.obj (.const:.string)
+                  1183d1f6    00000002     --HOLE-- [fill = 0]
+                  1183d1f8    00000050                 : strtod.obj (.const:_digits)
+                  1183d248    00000050                 : strtold.obj (.const:_digits)
+                  1183d298    00000048                 : strtod.obj (.const:_powerof10)
+                  1183d2e0    00000048                 : strtold.obj (.const:_powerof10)
+                  1183d328    00000028     svm.obj (.const:___vtbl__11ONE_CLASS_Q)
+                  1183d350    00000028     svm.obj (.const:___vtbl__5SVC_Q)
+                  1183d378    00000028     svm.obj (.const:___vtbl__5SVR_Q)
+                  1183d3a0    00000028     svm.obj (.const:___vtbl__6Kernel)
+                  1183d3c8    00000028     svm.obj (.const:___vtbl__6Solver)
+                  1183d3f0    00000028     svm.obj (.const:___vtbl__7QMatrix)
+                  1183d418    00000028     svm.obj (.const:___vtbl__9Solver_NU)
+                  1183d440    00000028     svm.obj (.const)
+                  1183d468    00000023     rts6740.lib : _printfi.obj (.const:.string)
+                  1183d48b    00000005     --HOLE-- [fill = 0]
+                  1183d490    00000007                 : _scanfi.obj (.const:.string:_flit$1)
+                  1183d497    00000001     --HOLE-- [fill = 0]
+                  1183d498    00000006                 : _scanfi.obj (.const:.string:_barr$2)
+
+.cinit     0    1183d4a0    000005b4     
+                  1183d4a0    00000140     rts6740.lib : pow.obj (.cinit)
+                  1183d5e0    000000cc     main.obj (.cinit)
+                  1183d6ac    00000004     --HOLE-- [fill = 0]
+                  1183d6b0    0000006c     svm.obj (.cinit)
+                  1183d71c    00000004     --HOLE-- [fill = 0]
+                  1183d720    0000005c     rts6740.lib : defs.obj (.cinit)
+                  1183d77c    00000004     --HOLE-- [fill = 0]
+                  1183d780    0000005c                 : lowlev.obj (.cinit)
+                  1183d7dc    00000004     --HOLE-- [fill = 0]
+                  1183d7e0    00000048                 : cos.obj (.cinit)
+                  1183d828    00000048                 : sin.obj (.cinit)
+                  1183d870    00000040                 : exp.obj (.cinit)
+                  1183d8b0    00000040                 : log.obj (.cinit)
+                  1183d8f0    00000040                 : tanh.obj (.cinit)
+                  1183d930    00000039                 : setlocale.obj (.cinit)
+                  1183d969    00000007     --HOLE-- [fill = 0]
+                  1183d970    0000002c                 : exit.obj (.cinit)
+                  1183d99c    00000004     --HOLE-- [fill = 0]
+                  1183d9a0    0000002c                 : memory.obj (.cinit)
+                  1183d9cc    00000004     --HOLE-- [fill = 0]
+                  1183d9d0    0000001c                 : _lock.obj (.cinit)
+                  1183d9ec    00000004     --HOLE-- [fill = 0]
+                  1183d9f0    00000010                 : rand.obj (.cinit)
+                  1183da00    0000000c     LCDK_Support_DSP.obj (.cinit)
+                  1183da0c    00000004     --HOLE-- [fill = 0]
+                  1183da10    0000000c     rts6740.lib : errno.obj (.cinit)
+                  1183da1c    00000004     --HOLE-- [fill = 0]
+                  1183da20    0000000c                 : fopen.obj (.cinit)
+                  1183da2c    00000004     --HOLE-- [fill = 0]
+                  1183da30    0000000c                 : strtok.obj (.cinit)
+                  1183da3c    00000004     --HOLE-- [fill = 0]
+                  1183da40    0000000c                 : vars.obj (.cinit)
+                  1183da4c    00000004     --HOLE-- [fill = 0]
+                  1183da50    00000004     (.pad.cinit) [fill = 0]
+
+.stack     0    1183da58    00000400     UNINITIALIZED
+                  1183da58    00000008     rts6740.lib : boot.obj (.stack)
+                  1183da60    000003f8     --HOLE--
+
+.cio       0    1183de58    00000120     UNINITIALIZED
+                  1183de58    00000120     rts6740.lib : trgmsg.obj (.cio)
+
+.switch    0    1183df78    0000007c     
+                  1183df78    00000028     rts6740.lib : _scanfi.obj (.switch:__sset_arg)
+                  1183dfa0    00000018     LCDK_Support_DSP.obj (.switch:_SetSampleRate_AIC3106)
+                  1183dfb8    00000014     svm.obj (.switch:___ct__6KernelFiPCP8svm_nodeRC13svm_parameter)
+                  1183dfcc    00000014     svm.obj (.switch:_k_function__6KernelSFPC8svm_nodeT1RC13svm_parameter)
+                  1183dfe0    00000014     svm.obj (.switch:_svm_train_one__FPC11svm_problemPC13svm_parameterdT3)
+
+.bss       0    1183dff4    00000060     UNINITIALIZED
+                  1183dff4    0000004c     main.obj (.bss)
+                  1183e040    00000010     svm.obj (.bss)
+                  1183e050    00000004     LCDK_Support_DSP.obj (.bss)
+
+
+GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
+
+address    name
+--------   ----
+1183dff4   $bss
+1183dff4   .bss
+11820200   .text
+1183b360   C$$EXIT
+1183ae98   C$$IO$$
+1182d1ac   _AIC3106_write_reg
+1183b8c8   _B
+1183c7f8   _C_locale
+1182cf34   _CheckForOverrun
+1183c8fc   _CodecDataIn
+1183c900   _CodecDataOut
+118356a0   _Codec_ISR
+1182cac8   _DSP_Init
+1182cae8   _DSP_Init_EDMA
+1182cccc   _EnableInterrupts
+1182cd18   _EnableInterrupts_EDMA
+1182fe48   _GetCenterFrequency
+1182f9e0   _GetCoefficient
+1182fc08   _GetFilterParameter
+1182fdac   _GetMagnitudeFactor
+1182cac0   _GetSampleFreq
+11837360   _HOSTclose
+11838660   _HOSTlseek
+11838a60   _HOSTopen
+11838b40   _HOSTread
+11836d60   _HOSTrename
+11839240   _HOSTunlink
+11839300   _HOSTwrite
+1182cc64   _InitDigitalOutputs
+1182cb08   _InitLEDs
+1182cf64   _Init_AIC3106
+1182cd8c   _Init_I2C
+1182cc88   _Init_Interrupts
+1182cd08   _Init_Interrupts_EDMA
+1182d358   _Init_McASP0
+1182d6e8   _Init_UART2
+1182d828   _IsDataReady_UART2
+1182d84c   _IsTxReady_UART2
+1183dff4   _M
+1182fba4   _NormalizationFactor
+1182d7c8   _Puts_UART2
+1182ceec   _ReadCodecData
+1182cc4c   _ReadSwitches
+1182d808   _Read_UART2
+1182d1e8   _Reset_AIC3106
+1182cde8   _Reset_I2C
+1182d210   _SetSampleRate_AIC3106
+11828864   _Solve__6SolverFiRC7QMatrixPCdPCScPddN26PQ2_6Solver12SolutionInfoT1
+1183b3c0   _UARTout
+1182cf10   _WriteCodecData
+1182cc70   _WriteDigitalOutputs
+1182cb68   _WriteLEDs
+1182ce08   _Write_I2C
+1182d7a0   _Write_UART2
+1183b3c8   _X
+1183de58   __CIOBUF_
+1183de58   __STACK_END
+00000400   __STACK_SIZE
+00020000   __SYSMEM_SIZE
+00000001   __TI_args_main
+1183a9c0   ___TI_cpp_init
+1183c8f8   ___TI_enable_exit_profile_output
+ffffffff   ___TI_pprof_out_hndl
+ffffffff   ___TI_prof_data_size
+ffffffff   ___TI_prof_data_start
+1183b160   ___abort_execution
+ffffffff   ___binit__
+1183dff4   ___bss__
+ffffffff   ___c_args__
+1183d4a0   ___cinit__
+11827dc0   ___ct__5CacheFil
+118282ec   ___ct__6KernelFiPCP8svm_nodeRC13svm_parameter
+1183b180   ___default_new_handler__Fv
+1183b1a0   ___dl__FPv
+1183b1c0   ___dla__FPv
+11827eb4   ___dt__5CacheFv
+118284c0   ___dt__6KernelFv
+1183e054   ___end__
+1183b3c0   ___etext__
+1183aea0   ___isinf
+11839a80   ___nw__FUi
+1183b1e0   ___nwa__FUi
+ffffffff   ___pinit__
+1183b200   ___pure_virtual_called
+11820200   ___text__
+1183d3a0   ___vtbl__6Kernel
+1183d3c8   ___vtbl__6Solver
+1183d418   ___vtbl__9Solver_NU
+1183af20   __args_main
+118393c0   __auto_init
+11837e80   __buff_read
+11838c20   __c6xabi_divi
+11839540   __c6xabi_divu
+11839780   __c6xabi_remi
+11839b20   __cleanup
+1183c8f0   __cleanup_ptr
+11837fa0   __closefile
+1183d0f0   __ctypes_
+1182eec0   __divd
+11834820   __divf
+11838c20   __divi
+11839bc0   __divli
+11839540   __divu
+11836880   __divul
+11834fa0   __divull
+11839600   __doflush
+1183c8f4   __dtors_ptr
+11839da0   __fixdli
+1183a5c0   __fltlid
+1183af60   __frcmpyd_div
+1183c530   __ft_end
+1183c210   __ftable
+1183a640   __llshl
+1183afa0   __llshru
+1183c904   __lock
+1183b240   __negll
+1183c82c   __new_handler
+1183b260   __nop
+11839e40   __nround
+11831a80   __printfi
+118396c0   __rd_ok
+11839780   __remi
+1183b020   __remli
+1183b060   __remul
+1183aa20   __remull
+1182d880   __scanfi
+1183da58   __stack
+1183aa80   __subcull
+11800200   __sys_memory
+1183c3f0   __tmpnams
+1183b320   __trunc
+1183c908   __unlock
+11838760   __wrt_ok
+1183b360   _abort
+11838d00   _atoi
+1183a940   _autoCorr
+1183e014   _avg
+1182a84c   _be_shrunk__6SolverFidT2
+1182b214   _be_shrunk__9Solver_NUFidN32
+1183e000   _begining
+1183a6c0   _c_int00
+1182a390   _calculate_rho__6SolverFv
+1182af4c   _calculate_rho__9Solver_NUFv
+1183a740   _calloc
+11838de0   _close
+1183e018   _coeff
+11839f80   _copy_in
+118337a0   _cos
+1183e028   _cross_validation
+1183e008   _denominator
+1182c048   _do_cross_validation
+1182a550   _do_shrinking__6SolverFv
+1182b30c   _do_shrinking__9Solver_NUFv
+118287a4   _dot__6KernelSFPC8svm_nodeT1
+1183c20c   _errno
+11839840   _exit
+11836320   _exp
+1183aae0   _fclose
+1183e004   _feature
+1183ab40   _ferror
+11838ec0   _fflush
+1182b640   _fft
+11837980   _fgetc
+1183b380   _fgets
+11837504   _fircircfunc
+1183b120   _flipfunc
+1183aba0   _fopen
+11838860   _fprintf
+11835b00   _fputc
+11832ac0   _fputs
+11834aa0   _free
+11838420   _frexp
+11838fa0   _fscanf
+11838540   _fseek
+11837ac0   _ftell
+11827f38   _get_data__5CacheFiPPfT1
+11837980   _getc
+1182c3c4   _initialization
+11828510   _k_function__6KernelSFPC8svm_nodeT1RC13svm_parameter
+1183dff8   _kk
+1183c208   _label
+118376e0   _ldexp
+1183e040   _libsvm_version
+1183e01c   _llh
+11835f20   _log
+11828268   _lru_delete__5CacheFPQ2_5Cache6head_t
+11828298   _lru_insert__5CacheFPQ2_5Cache6head_t
+1183a0c0   _lseek
+11839900   _ltoa
+1183e010   _magnitude
+1182b9a8   _main
+11837060   _malloc
+1183e030   _max_nr_attr
+1183ac00   _memccpy
+1183a160   _memcpy
+11839080   _memset
+1183c0c8   _mfcc_result
+1183e020   _model
+1183a2a0   _modf
+1183e02c   _nr_fold
+1183e00c   _numerator
+118371e0   _open
+1183c198   _param
+1182e180   _pow
+11833a80   _powi
+1182c618   _predict
+1183e034   _predict_probability
+11839160   _printf
+1183c1f8   _prob
+11835b00   _putc
+1183a7c0   _rand
+1183a3e0   _read
+11826b40   _read_model_header__FPQ2_3std4FILEP9svm_model
+1182c4a0   _read_problem
+1183a840   _readmsg
+11834020   _realloc
+11829ac4   _reconstruct_gradient__6SolverFv
+1183b3a0   _remove
+11829e0c   _select_working_set__6SolverFRiT1
+1182a934   _select_working_set__9Solver_NUFRiT1
+1183ac60   _setlocale
+11836120   _setvbuf
+11834d20   _sin
+1183bcc8   _spectrum
+11838960   _sqrt
+1183dffc   _startflag
+1183b0a0   _strcmp
+1183acc0   _strcspn
+1183b0e0   _strlen
+1183ad20   _strrchr
+1183a480   _strspn
+11830900   _strtod
+118399c0   _strtok
+11830d60   _strtol
+118311c0   _strtold
+11831620   _strtoll
+118322c0   _strtoul
+118326c0   _strtoull
+11827860   _svm_check_parameter
+11827d20   _svm_check_probability_model
+11825210   _svm_cross_validation
+11827838   _svm_destroy_param
+118277f4   _svm_free_and_destroy_model
+11827654   _svm_free_model_content
+118259e0   _svm_get_labels
+118259c8   _svm_get_nr_class
+11825ab0   _svm_get_nr_sv
+11825a4c   _svm_get_sv_indices
+118259b0   _svm_get_svm_type
+11825ac8   _svm_get_svr_probability
+11827230   _svm_load_model
+11826028   _svm_predict
+118260c0   _svm_predict_probability
+11825b28   _svm_predict_values
+118263b4   _svm_save_model
+11827d90   _svm_set_print_string_function__FPFPCc_v
+1182424c   _svm_train
+11828064   _swap_index__5CacheFiT1
+11829984   _swap_index__6SolverFiT1
+11836bc0   _tanh
+11837d40   _ungetc
+1183a8c0   _unlink
+1183ade0   _vsprintf
+1183b4c8   _w
+1182cd58   _wait
+1183a520   _write
+1183ae40   _writemsg
+1183e038   _x
+1183e024   _x_space
+ffffffff   binit
+1183d4a0   cinit
+1183e054   end
+1183b3c0   etext
+ffffffff   pinit
+
+
+GLOBAL SYMBOLS: SORTED BY Symbol Address 
+
+address    name
+--------   ----
+00000001   __TI_args_main
+00000400   __STACK_SIZE
+00020000   __SYSMEM_SIZE
+11800200   __sys_memory
+11820200   .text
+11820200   ___text__
+1182424c   _svm_train
+11825210   _svm_cross_validation
+118259b0   _svm_get_svm_type
+118259c8   _svm_get_nr_class
+118259e0   _svm_get_labels
+11825a4c   _svm_get_sv_indices
+11825ab0   _svm_get_nr_sv
+11825ac8   _svm_get_svr_probability
+11825b28   _svm_predict_values
+11826028   _svm_predict
+118260c0   _svm_predict_probability
+118263b4   _svm_save_model
+11826b40   _read_model_header__FPQ2_3std4FILEP9svm_model
+11827230   _svm_load_model
+11827654   _svm_free_model_content
+118277f4   _svm_free_and_destroy_model
+11827838   _svm_destroy_param
+11827860   _svm_check_parameter
+11827d20   _svm_check_probability_model
+11827d90   _svm_set_print_string_function__FPFPCc_v
+11827dc0   ___ct__5CacheFil
+11827eb4   ___dt__5CacheFv
+11827f38   _get_data__5CacheFiPPfT1
+11828064   _swap_index__5CacheFiT1
+11828268   _lru_delete__5CacheFPQ2_5Cache6head_t
+11828298   _lru_insert__5CacheFPQ2_5Cache6head_t
+118282ec   ___ct__6KernelFiPCP8svm_nodeRC13svm_parameter
+118284c0   ___dt__6KernelFv
+11828510   _k_function__6KernelSFPC8svm_nodeT1RC13svm_parameter
+118287a4   _dot__6KernelSFPC8svm_nodeT1
+11828864   _Solve__6SolverFiRC7QMatrixPCdPCScPddN26PQ2_6Solver12SolutionInfoT1
+11829984   _swap_index__6SolverFiT1
+11829ac4   _reconstruct_gradient__6SolverFv
+11829e0c   _select_working_set__6SolverFRiT1
+1182a390   _calculate_rho__6SolverFv
+1182a550   _do_shrinking__6SolverFv
+1182a84c   _be_shrunk__6SolverFidT2
+1182a934   _select_working_set__9Solver_NUFRiT1
+1182af4c   _calculate_rho__9Solver_NUFv
+1182b214   _be_shrunk__9Solver_NUFidN32
+1182b30c   _do_shrinking__9Solver_NUFv
+1182b640   _fft
+1182b9a8   _main
+1182c048   _do_cross_validation
+1182c3c4   _initialization
+1182c4a0   _read_problem
+1182c618   _predict
+1182cac0   _GetSampleFreq
+1182cac8   _DSP_Init
+1182cae8   _DSP_Init_EDMA
+1182cb08   _InitLEDs
+1182cb68   _WriteLEDs
+1182cc4c   _ReadSwitches
+1182cc64   _InitDigitalOutputs
+1182cc70   _WriteDigitalOutputs
+1182cc88   _Init_Interrupts
+1182cccc   _EnableInterrupts
+1182cd08   _Init_Interrupts_EDMA
+1182cd18   _EnableInterrupts_EDMA
+1182cd58   _wait
+1182cd8c   _Init_I2C
+1182cde8   _Reset_I2C
+1182ce08   _Write_I2C
+1182ceec   _ReadCodecData
+1182cf10   _WriteCodecData
+1182cf34   _CheckForOverrun
+1182cf64   _Init_AIC3106
+1182d1ac   _AIC3106_write_reg
+1182d1e8   _Reset_AIC3106
+1182d210   _SetSampleRate_AIC3106
+1182d358   _Init_McASP0
+1182d6e8   _Init_UART2
+1182d7a0   _Write_UART2
+1182d7c8   _Puts_UART2
+1182d808   _Read_UART2
+1182d828   _IsDataReady_UART2
+1182d84c   _IsTxReady_UART2
+1182d880   __scanfi
+1182e180   _pow
+1182eec0   __divd
+1182f9e0   _GetCoefficient
+1182fba4   _NormalizationFactor
+1182fc08   _GetFilterParameter
+1182fdac   _GetMagnitudeFactor
+1182fe48   _GetCenterFrequency
+11830900   _strtod
+11830d60   _strtol
+118311c0   _strtold
+11831620   _strtoll
+11831a80   __printfi
+118322c0   _strtoul
+118326c0   _strtoull
+11832ac0   _fputs
+118337a0   _cos
+11833a80   _powi
+11834020   _realloc
+11834820   __divf
+11834aa0   _free
+11834d20   _sin
+11834fa0   __divull
+118356a0   _Codec_ISR
+11835b00   _fputc
+11835b00   _putc
+11835f20   _log
+11836120   _setvbuf
+11836320   _exp
+11836880   __divul
+11836bc0   _tanh
+11836d60   _HOSTrename
+11837060   _malloc
+118371e0   _open
+11837360   _HOSTclose
+11837504   _fircircfunc
+118376e0   _ldexp
+11837980   _fgetc
+11837980   _getc
+11837ac0   _ftell
+11837d40   _ungetc
+11837e80   __buff_read
+11837fa0   __closefile
+11838420   _frexp
+11838540   _fseek
+11838660   _HOSTlseek
+11838760   __wrt_ok
+11838860   _fprintf
+11838960   _sqrt
+11838a60   _HOSTopen
+11838b40   _HOSTread
+11838c20   __c6xabi_divi
+11838c20   __divi
+11838d00   _atoi
+11838de0   _close
+11838ec0   _fflush
+11838fa0   _fscanf
+11839080   _memset
+11839160   _printf
+11839240   _HOSTunlink
+11839300   _HOSTwrite
+118393c0   __auto_init
+11839540   __c6xabi_divu
+11839540   __divu
+11839600   __doflush
+118396c0   __rd_ok
+11839780   __c6xabi_remi
+11839780   __remi
+11839840   _exit
+11839900   _ltoa
+118399c0   _strtok
+11839a80   ___nw__FUi
+11839b20   __cleanup
+11839bc0   __divli
+11839da0   __fixdli
+11839e40   __nround
+11839f80   _copy_in
+1183a0c0   _lseek
+1183a160   _memcpy
+1183a2a0   _modf
+1183a3e0   _read
+1183a480   _strspn
+1183a520   _write
+1183a5c0   __fltlid
+1183a640   __llshl
+1183a6c0   _c_int00
+1183a740   _calloc
+1183a7c0   _rand
+1183a840   _readmsg
+1183a8c0   _unlink
+1183a940   _autoCorr
+1183a9c0   ___TI_cpp_init
+1183aa20   __remull
+1183aa80   __subcull
+1183aae0   _fclose
+1183ab40   _ferror
+1183aba0   _fopen
+1183ac00   _memccpy
+1183ac60   _setlocale
+1183acc0   _strcspn
+1183ad20   _strrchr
+1183ade0   _vsprintf
+1183ae40   _writemsg
+1183ae98   C$$IO$$
+1183aea0   ___isinf
+1183af20   __args_main
+1183af60   __frcmpyd_div
+1183afa0   __llshru
+1183b020   __remli
+1183b060   __remul
+1183b0a0   _strcmp
+1183b0e0   _strlen
+1183b120   _flipfunc
+1183b160   ___abort_execution
+1183b180   ___default_new_handler__Fv
+1183b1a0   ___dl__FPv
+1183b1c0   ___dla__FPv
+1183b1e0   ___nwa__FUi
+1183b200   ___pure_virtual_called
+1183b240   __negll
+1183b260   __nop
+1183b320   __trunc
+1183b360   C$$EXIT
+1183b360   _abort
+1183b380   _fgets
+1183b3a0   _remove
+1183b3c0   _UARTout
+1183b3c0   ___etext__
+1183b3c0   etext
+1183b3c8   _X
+1183b4c8   _w
+1183b8c8   _B
+1183bcc8   _spectrum
+1183c0c8   _mfcc_result
+1183c198   _param
+1183c1f8   _prob
+1183c208   _label
+1183c20c   _errno
+1183c210   __ftable
+1183c3f0   __tmpnams
+1183c530   __ft_end
+1183c7f8   _C_locale
+1183c82c   __new_handler
+1183c8f0   __cleanup_ptr
+1183c8f4   __dtors_ptr
+1183c8f8   ___TI_enable_exit_profile_output
+1183c8fc   _CodecDataIn
+1183c900   _CodecDataOut
+1183c904   __lock
+1183c908   __unlock
+1183d0f0   __ctypes_
+1183d3a0   ___vtbl__6Kernel
+1183d3c8   ___vtbl__6Solver
+1183d418   ___vtbl__9Solver_NU
+1183d4a0   ___cinit__
+1183d4a0   cinit
+1183da58   __stack
+1183de58   __CIOBUF_
+1183de58   __STACK_END
+1183dff4   $bss
+1183dff4   .bss
+1183dff4   _M
+1183dff4   ___bss__
+1183dff8   _kk
+1183dffc   _startflag
+1183e000   _begining
+1183e004   _feature
+1183e008   _denominator
+1183e00c   _numerator
+1183e010   _magnitude
+1183e014   _avg
+1183e018   _coeff
+1183e01c   _llh
+1183e020   _model
+1183e024   _x_space
+1183e028   _cross_validation
+1183e02c   _nr_fold
+1183e030   _max_nr_attr
+1183e034   _predict_probability
+1183e038   _x
+1183e040   _libsvm_version
+1183e054   ___end__
+1183e054   end
+ffffffff   ___TI_pprof_out_hndl
+ffffffff   ___TI_prof_data_size
+ffffffff   ___TI_prof_data_start
+ffffffff   ___binit__
+ffffffff   ___c_args__
+ffffffff   ___pinit__
+ffffffff   binit
+ffffffff   pinit
+
+[274 symbols]
