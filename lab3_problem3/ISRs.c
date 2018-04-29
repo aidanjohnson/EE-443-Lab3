@@ -24,7 +24,7 @@ extern int kk;
 #define M 256
 extern short X[M];
 
-int gain = 10;
+int gain = 2;
 
 volatile union {
 	Uint32 UINT;
