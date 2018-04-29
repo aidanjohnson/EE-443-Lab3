@@ -40,8 +40,8 @@ function [mfccs] = getMFCC(file, mkFig, play)
     end
     
     % normalize audio
-    y_max = max(y_mono);
-    y_mono = y_mono./y_max;
+    %y_max = max(y_mono);
+    %y_mono = y_mono./y_max;
     
     Tw = 21; % analysis frame duration (ms)
     Ts = 10; % analysis frame shift (ms) -- 10.48 for 380x13 4 s

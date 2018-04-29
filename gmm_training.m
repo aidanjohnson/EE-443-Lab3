@@ -1,9 +1,9 @@
 clear all;
 close all;
 
-[mfccs_duck] = getMFCC('Duck.wav');
-[mfccs_bluejay] = getMFCC('Bluejay.mp3');
-[mfccs_dove] = getMFCC('Dove.mp3');
+[mfccs_duck] = getMFCC('Duck.wav',1,0);
+[mfccs_bluejay] = getMFCC('Bluejay.mp3',1,0);
+[mfccs_dove] = getMFCC('Dove.mp3',1,0);
 
 save('mfccs_duck.mat','mfccs_duck');
 save('mfccs_bluejay.mat','mfccs_bluejay');
