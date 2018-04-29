@@ -24,6 +24,8 @@ extern int kk;
 #define M 256
 extern short X[M];
 
+Int16 monoIn;
+
 volatile union {
 	Uint32 UINT;
 	Int16 Channel[2];
@@ -60,12 +62,15 @@ interrupt void Codec_ISR()
 		startflag = 1;
 	}
 
+	monoIn = 0.5*(CodecDataIn.Channel[LEFT] + CodecDataIn.Channel[RIGHT]);
+
 	if(!startflag){
 		// P3 Put a new data to the buffer X
-		X[kk] = 0.5*(CodecDataIn.Channel[LEFT] + CodecDataIn.Channel[RIGHT]);
-		kk++;
+		X[kk++] = monoIn;
 	}
+	CodecDataOut.Channel[LEFT] = monoIn;
+	CodecDataOut.Channel[RIGHT] = monoIn;
 
-	WriteCodecData(CodecDataIn.UINT); // send output data to  port
+	WriteCodecData(CodecDataOut.UINT); // send output data to  port
 }
 

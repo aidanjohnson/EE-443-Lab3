@@ -21,11 +21,9 @@
 int kk = 0;
 int startflag = 1;
 
-int training = 1;
 short X[BUFFERSIZE];
 COMPLEX w[BUFFERSIZE]; // twiddle factors
 COMPLEX B[BUFFERSIZE]; // spectrum i/o
-float feature;
 float denominator = 0;
 float numerator = 0;
 float magnitude = 0;
@@ -33,7 +31,6 @@ float avg = 0;
 int coeff=0;
 double spectrum[BUFFERSIZE]; // magnitude of spectrum
 double mfcc_result[13]={0};
-float llh;
 GMM gmm[1]; // create GMM model
 
 double means[39] = {-21.886301,6.976259,6.042062,-4.477110,4.430626,-9.190420,-11.391828,-14.599642,-27.150184,-21.557519,-30.328668,-9.382853,2.176836,56.965736,-8.535606,-3.669411,-2.013095,-2.403152,-6.841192,-1.904727,-7.778224,-5.127691,-1.682388,-5.240222,0.280528,-2.112341,-26.870300,-32.062663,3.481534,-9.211527,3.318361,-5.534016,-16.145194,4.625832,15.333227,1.840135,-26.633860,29.791624,-9.028150};
@@ -131,7 +128,7 @@ int main() {
 
 	DSP_Init();
 
-	Init_UART2(115200); // set baudrate
+//	Init_UART2(115200); // set baudrate
 	initializeGMM(K, D); // get GM model
 	twiddleFactors();
 
