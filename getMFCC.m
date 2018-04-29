@@ -46,8 +46,8 @@ function [mfccs] = getMFCC(file, mkFig, play)
     Tw = 21; % analysis frame duration (ms)
     Ts = 10; % analysis frame shift (ms) -- 10.48 for 380x13 4 s
     alpha = 0.97; % preemphasis coefficient
-    R = [100, 10000]; % frequency range to consider (Hz)
-    M = 20; % number of filterbank channels 
+    R = [300, 3700]; % frequency range to consider (Hz)
+    M = 48; % number of filterbank channels 
     C = 13; % number of cepstral coefficients
     L = 22; % cepstral sine lifter parameter
 
