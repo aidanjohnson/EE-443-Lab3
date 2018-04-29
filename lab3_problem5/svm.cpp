@@ -2900,7 +2900,8 @@ svm_model *svm_read_model(double *param, int kkk, const svm_parameter *svmparam)
 	model->nSV = Malloc(int, kkk);
 
 	// read sv_coef and SV
-	int pp, k;
+	int pp = 0;
+	int k = 0;
 	int D = 13;
 	int rr=0;
 	model->nr_class = param[pp++];

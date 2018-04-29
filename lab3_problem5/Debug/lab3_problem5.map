@@ -1,7 +1,7 @@
 ******************************************************************************
                TMS320C6x Linker Unix v7.4.16                   
 ******************************************************************************
->> Linked Sun Apr 29 13:49:43 2018
+>> Linked Sun Apr 29 13:52:48 2018
 
 OUTPUT FILE NAME:   <lab3_problem5.out>
 ENTRY POINT SYMBOL: "_c_int00"  address: 1181a960
@@ -549,7 +549,7 @@ ffffffff   ___pinit__
 11805a4c   _svm_get_sv_indices
 118059b0   _svm_get_svm_type
 11805ac8   _svm_get_svr_probability
-11807710   _svm_load_model
+11807714   _svm_load_model
 118060ec   _svm_predict
 11806184   _svm_predict_probability
 11805b28   _svm_predict_values
@@ -600,7 +600,7 @@ address    name
 11806464   _svm_save_model
 11806be0   _read_model_header__FPQ2_3std4FILEP9svm_model
 118072d0   _svm_read_model
-11807710   _svm_load_model
+11807714   _svm_load_model
 11807b34   _svm_free_model_content
 11807cd4   _svm_free_and_destroy_model
 11807d18   _svm_destroy_param
