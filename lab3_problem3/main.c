@@ -47,58 +47,59 @@ volatile union {
 } UARTdouble;
 
 // comment out second header for UART, first for hard coded means, covars, weights
-void storeGMM(double *parameters, int paramsize)
-//void storeGMM(int index, int param)
+//void storeGMM(double *parameters, int paramsize)
+void storeGMM(int index, int param)
 {
-	int ii = 0;
-	int iter = 0;
-    Uint8 temp = 0;
-	while(ii<paramsize){
-		if(IsDataReady_UART2()){
-            temp = Read_UART2();
-            UARTdouble.i8[iter++] = temp;
-            while(IsTxReady_UART2()==0) ;
-            Write_UART2(1);
-
-            if(iter>7){
-                iter = 0;
-                parameters[ii++] = UARTdouble.sh;
-                printf("Index: %d, Received double: %lf \n", ii, UARTdouble.sh);
-            }
-		}
-	}
-	// uncomment for hard coded means, covars, weights; comment for UART
-//	if (param == 1) {
-//		gmm[0].means[index] = means[index];
-//	} else if (param == 2) {
-//		gmm[0].weights[index] = weights[index];
-//	} else if (param == 3) {
-//		gmm[0].covars[index] = covars[index];
+//	int ii = 0;
+//	int iter = 0;
+//    Uint8 temp = 0;
+//	while(ii<paramsize){
+//		if(IsDataReady_UART2()){
+//            temp = Read_UART2();
+//            UARTdouble.i8[iter++] = temp;
+//            while(IsTxReady_UART2()==0) ;
+//            Write_UART2(1);
+//
+//            if(iter>7){
+//                iter = 0;
+//                parameters[ii++] = UARTdouble.sh;
+//                printf("Index: %d, Received double: %lf \n", ii, UARTdouble.sh);
+//            }
+//		}
 //	}
+
+	// uncomment for hard coded means, covars, weights; comment for UART
+	if (param == 1) {
+		gmm[0].means[index] = means[index];
+	} else if (param == 2) {
+		gmm[0].weights[index] = weights[index];
+	} else if (param == 3) {
+		gmm[0].covars[index] = covars[index];
+	}
 
 }
 
 void modelGM(int K, int D)
 {
 	// comment out for hard coded means, covars, weights; uncomment for UART
-	storeGMM(gmm[0].means, D*K);
-	storeGMM(gmm[0].weights, K);
-	storeGMM(gmm[0].covars, D*K);
+//	storeGMM(gmm[0].means, D*K);
+//	storeGMM(gmm[0].weights, K);
+//	storeGMM(gmm[0].covars, D*K);
 
 	// uncomment for hard coded means, covars, weights; comment for UART
 	// Get GM model mean, weights, variances
-//	int i;
-//	for (i = 0; i < D*K; i++) {
-//		storeGMM(i, 1);
-//	}
-//	int j;
-//	for (j = 0; j < K; j++) {
-//		storeGMM(j, 2);
-//	}
-//	int k;
-//	for (k = 0; k < D*K; k++) {
-//		storeGMM(k, 3);
-//	}
+	int i;
+	for (i = 0; i < D*K; i++) {
+		storeGMM(i, 1);
+	}
+	int j;
+	for (j = 0; j < K; j++) {
+		storeGMM(j, 2);
+	}
+	int k;
+	for (k = 0; k < D*K; k++) {
+		storeGMM(k, 3);
+	}
 }
 
 void initializeGMM(int K, int D)
