@@ -1,4 +1,4 @@
-function [mfccs] = getMFCC(file, mkFig)
+function [mfccs] = getMFCC(file, mkFig, play)
     %   Returns MFC coefficients, and plots time (audio) signal and MFCC.
     %   Plotting is optional (i.e., mkFig can be omitted).
     %   If mkFig is TRUE, plots audio and MFCCs, else no plots by default.
@@ -16,6 +16,10 @@ function [mfccs] = getMFCC(file, mkFig)
     if ~exist('mkFig','var')
         mkFig = 0;
     end
+    
+    if ~exist('play','var')
+        play = 0;
+    end  
     
     % Load audio signal
     [y, Fs] = audioread(file);
@@ -51,7 +55,9 @@ function [mfccs] = getMFCC(file, mkFig)
     w = @(N)(0.54-0.46*cos(2*pi*(0:N-1).'/(N-1)));
     
     % Play speech samples
-    % sound(y_mono, Fs);
+    if play == 1
+        sound(y_mono, Fs);
+    end
 
     % Feature extraction (feature vectors as columns)
     [MFCC, FBE, frames] = mfcc(y_mono, Fs, Tw, Ts, alpha, w, R, M, C, L);
