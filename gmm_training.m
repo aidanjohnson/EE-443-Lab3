@@ -1,7 +1,7 @@
 clear all;
 close all;
 
-[mfccs_duck] = getMFCC('Duck.wav',1,0);
+[mfccs_duck] = getMFCC('Duck_norm_noisereduc.wav',1,0);
 [mfccs_bluejay] = getMFCC('Bluejay.mp3',1,0);
 [mfccs_dove] = getMFCC('Dove.mp3',1,0);
 
