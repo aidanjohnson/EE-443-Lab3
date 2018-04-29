@@ -43,9 +43,6 @@ function [mfccs] = getMFCC(file, mkFig, play)
     y_max = max(y_mono);
     y_mono = y_mono./y_max;
     
-    % gain
-    y_mono = 10.*y_mono;
-    
     Tw = 21; % analysis frame duration (ms)
     Ts = 10; % analysis frame shift (ms) -- 10.48 for 380x13 4 s
     alpha = 0.97; % preemphasis coefficient
