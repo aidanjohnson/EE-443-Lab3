@@ -43,7 +43,7 @@ int nr_fold;
 
 void initialization();
 void modelSVM(int K, int D);
-void storeSVM(int index1, int index2, int param);
+//void storeSVM(int index1, int index2, int param);
 void read_problem(double *featureVector, int *label,int N, int D);
 void do_cross_validation();
 

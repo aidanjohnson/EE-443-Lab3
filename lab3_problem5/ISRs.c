@@ -18,6 +18,8 @@
 #define LEFT  0
 #define RIGHT 1
 
+Int16 monoIn;
+
 volatile union {
 	Uint32 UINT;
 	Int16 Channel[2];
@@ -58,23 +60,19 @@ interrupt void Codec_ISR()
 
   	CodecDataIn.UINT = ReadCodecData();		// get input data samples
 
-	/* add your code starting here */
-	// I added my code here
 	if(kk>=M){
-         /* (1). Initialize index kk                                            */
-		kk=0;
-         /* (2). Change startflag to start processing in while loop in main()   */
+		kk = 0;
 		startflag = 1;
 	}
 
-	if(!startflag){
-         /* (1). Put a new data to the buffer X    */
-		X[kk] = CodecDataIn.Channel[0];
-         /* (2). Update index kk                   */
-		kk++;
-       }
-	// end of my code
-	/* end your code here */
+	monoIn = 0.5*(CodecDataIn.Channel[LEFT] + CodecDataIn.Channel[RIGHT]);
 
-	WriteCodecData(CodecDataIn.UINT);		// send output data to  port
+	if(!startflag){
+		// P3 Put a new data to the buffer X
+		X[kk++] = monoIn;
+	}
+	CodecDataOut.Channel[LEFT] = monoIn;
+	CodecDataOut.Channel[RIGHT] = monoIn;
+
+	WriteCodecData(CodecDataOut.UINT); // send output data to  port
 }
