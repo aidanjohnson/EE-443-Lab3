@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////
 
 #include "DSP_Config.h" 
+//#include "fft.h"
   
 // Data is received as 2 16-bit words (left/right) packed into one
 // 32-bit word.  The union allows the data to be accessed as a single 
@@ -17,8 +18,6 @@
 
 #define LEFT  0
 #define RIGHT 1
-
-Int16 monoIn;
 
 volatile union {
 	Uint32 UINT;
@@ -33,12 +32,11 @@ struct cmpx                       //complex data structure used by FFT
 typedef struct cmpx COMPLEX;
 
 
-/* add any global variables here */
 extern int startflag;
 extern int kk;
 extern int M;
 
-extern short X[256];
+extern short X[1024];
 
 interrupt void Codec_ISR()
 ///////////////////////////////////////////////////////////////////////
@@ -53,26 +51,25 @@ interrupt void Codec_ISR()
 // Notes:     None
 ///////////////////////////////////////////////////////////////////////
 {                    
-	/* add any local variables here */
 
  	if(CheckForOverrun())					// overrun error occurred (i.e. halted DSP)
 		return;								// so serial port is reset to recover
 
   	CodecDataIn.UINT = ReadCodecData();		// get input data samples
 
-	if(kk>=M){
-		kk = 0;
+	if(kk>M-1){
+         /* (1). Initialize index kk                                            */
+		kk=0;
+         /* (2). Change startflag to start processing in while loop in main()   */
 		startflag = 1;
 	}
 
-	monoIn = 0.5*(CodecDataIn.Channel[LEFT] + CodecDataIn.Channel[RIGHT]);
-
 	if(!startflag){
-		// P3 Put a new data to the buffer X
-		X[kk++] = monoIn;
-	}
-	CodecDataOut.Channel[LEFT] = monoIn;
-	CodecDataOut.Channel[RIGHT] = monoIn;
+         /* (1). Put a new data to the buffer X    */
+		X[kk] = CodecDataIn.Channel[LEFT];
+         /* (2). Update index kk                   */
+		kk++;
+       }
 
-	WriteCodecData(CodecDataOut.UINT); // send output data to  port
+	WriteCodecData(CodecDataIn.UINT);		// send output data to  port
 }

@@ -11,11 +11,26 @@ load('Md1.mat');
 class = 3;
 % sendUART(class, s);
 
+for n = 1:3
+    rho = Md1.BinaryLearners{n}.Bias;
+    bias(n) = rho;
+%     sendUART(rho, s);
+end
 
 for n = 1:3
     nsv = size(Md1.BinaryLearners{n}.SupportVectors, 1);
     numberSV(n) = nsv;
 %     sendUART(nsv, s);
+end
+
+k = 1;
+for n = 1:3
+    for i = 1:numberSV(n)
+        sv_coef = Md1.BinaryLearners{n}.Alpha(i);
+        coefficientsSV(k) = sv_coef;
+        k = k + 1;
+%         sendUART(sv_coef, s);
+    end
 end
 
 k = 1;
@@ -30,32 +45,16 @@ for n = 1:3
     end
 end
 
-k = 1;
-for n = 1:3
-    for i = 1:numberSV(n)
-        sv_coef = Md1.BinaryLearners{n}.Alpha(i);
-        coefficientsSV(k) = sv_coef;
-        k = k + 1;
-%         sendUART(sv_coef, s);
-    end
-end
-
-for n = 1:3
-    rho = Md1.BinaryLearners{n}.Bias;
-    bias(n) = rho;
-%     sendUART(rho, s);
-end
-
 % fclose(s);
 % delete(s);
 
 printTXT('SVMclass.txt',class);
-printTXT('SVMn.txt',numberSV);
-printTXT('SVM.txt',supportVectors);
-printTXT('SVMcoef.txt',coefficientsSV);
 printTXT('SVMrho.txt',bias);
-params = [class, numberSV, supportVectors, coefficientsSV, bias];
-printTXT('SVM_class_n_sv_coef_bias.txt', params);
+printTXT('SVMn.txt',numberSV);
+printTXT('SVMcoef.txt',coefficientsSV);
+printTXT('SVM.txt',supportVectors);
+params = [class, bias, numberSV, coefficientsSV, supportVectors];
+printTXT('SVM_class_bias_n_coef_sv.txt', params);
 
 function [] = printTXT(name, out)
     fileID = fopen(name,'w');
