@@ -57,7 +57,7 @@ volatile union {
 
 // Predict
 int max_nr_attr = 64;
-int predict_probability=0;
+int predict_probability=1;
 struct svm_node x[33];
 static int (*info)(const char *fmt,...) = &printf;
 void predict(double *featureVector, int N, int D);
@@ -111,6 +111,7 @@ int main()
                       double re = (double) B[mm].real;
                       double im = (double) B[mm].imag;
                       spectrum[mm] = sqrt(re*re + im*im);
+//                      spectrum[mm] = (double) B[mm].real;
                   }
                   int fs = GetSampleFreq();
                   for (coeff = 0; coeff < D; coeff++) {
@@ -153,7 +154,6 @@ void do_cross_validation()
 	int total_correct = 0;
 	double total_error = 0;
 	double sumv = 0, sumy = 0, sumvv = 0, sumyy = 0, sumvy = 0;
-//	double *target = Malloc(double,prob.l);
 	double target[3];
 
 	svm_cross_validation(&prob,&param,nr_fold,target);
