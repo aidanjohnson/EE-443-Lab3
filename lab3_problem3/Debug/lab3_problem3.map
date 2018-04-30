@@ -1,7 +1,7 @@
 ******************************************************************************
-               TMS320C6x Linker Unix v7.4.16                   
+               TMS320C6x Linker PC v7.4.14                     
 ******************************************************************************
->> Linked Sun Apr 29 22:02:51 2018
+>> Linked Mon Apr 30 10:25:43 2018
 
 OUTPUT FILE NAME:   <lab3_problem3.out>
 ENTRY POINT SYMBOL: "_c_int00"  address: 1180b4e0
@@ -366,21 +366,21 @@ ffffffff   ___pinit__
 11800328   _gmm_set_initialization_method
 118002d8   _gmm_set_max_iter
 1180030c   _gmm_set_regularization_value
-11803710   _initializeGMM
+11803a60   _initializeGMM
 1180fbec   _kk
 118091e0   _ldexp
 118085a0   _log
 1180b020   _lseek
 1180a880   _ltoa
 1180fbdc   _magnitude
-11803878   _main
+118035a8   _main
 11809060   _malloc
 1180d920   _means
 1180b7a0   _memccpy
 1180b0c0   _memcpy
 1180a0c0   _memset
 1180d5a0   _mfcc_result
-11803634   _modelGM
+11803990   _modelGM
 1180b200   _modf
 1180fbe8   _monoIn
 1180fbd8   _numerator
@@ -396,10 +396,10 @@ ffffffff   ___pinit__
 11809c40   _sqrt
 1180b800   _srand
 1180fbd0   _startflag
-118035a8   _storeGMM
+11803904   _storeGMM
 1180ba40   _strcmp
 1180ba80   _time
-11803794   _twiddleFactors
+11803ae4   _twiddleFactors
 1180b660   _unlink
 1180bda0   _w
 11802718   _wait
@@ -474,11 +474,11 @@ address    name
 118031e8   _IsDataReady_UART2
 1180320c   _IsTxReady_UART2
 11803240   _fft
-118035a8   _storeGMM
-11803634   _modelGM
-11803710   _initializeGMM
-11803794   _twiddleFactors
-11803878   _main
+118035a8   _main
+11803904   _storeGMM
+11803990   _modelGM
+11803a60   _initializeGMM
+11803ae4   _twiddleFactors
 11803be0   _pow
 11804300   __divd
 11804e20   _GetCoefficient

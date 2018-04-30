@@ -17,7 +17,7 @@
 
 #define BUFFERSIZE 256
 int M = BUFFERSIZE;
-#define numFilters 48
+#define NUMFILTERS 48
 //#define M BUFFERSIZE
 #define CLASSES 3
 int K = CLASSES;  // Number of Classes
@@ -36,7 +36,7 @@ float magnitude = 0;
 float avg = 0;
 int coeff=0;
 double spectrum[BUFFERSIZE]; // magnitude of spectrum
-double mfcc_result[13]={0};
+double mfcc_result[FEATURES]={0};
 GMM gmm[1]; // create GMM model
 
 // {means[p1],means[p2],means[p3]}
@@ -51,6 +51,64 @@ volatile union {
 	double sh;
 	Uint8 i8[8];
 } UARTdouble;
+
+void storeGMM(int index, int param);
+void modelGM(int K, int D);
+void initializeGMM(int K, int D);
+void twiddleFactors();
+
+int main() {
+	int mm, bb, ll;
+
+	DSP_Init();
+
+	initializeGMM(K, D); // get GM model
+	twiddleFactors();
+
+	// main stalls here, interrupts drive operation
+	while(1) {
+		if(startflag){
+			 // Remove bias (DC offset)
+			avg = 0;
+			for(mm=0; mm<M; mm++){
+				avg = avg + X[mm];
+			}
+
+			// Measure the Magnitude of the input to find starting point
+			avg = avg/M;
+			magnitude = 0;
+			for(mm=0; mm<M; mm++){
+				magnitude = magnitude + abs(X[mm]-avg);
+			}
+
+			if(magnitude>30000){ // N-blocks
+				for(bb=0;bb<N;bb++){
+					for(ll=0; ll<M; ll++){
+						B[ll].real = X[ll];
+						B[ll].imag = 0;
+					}
+					// (P3). FFT: B is input and output, w is twiddle factors
+					fft(B, M, w);
+					// (P3). Find 13 MFCC coefficients
+					for(mm=0; mm<M; mm++){
+						double re = (double) B[mm].real;
+						double im = (double) B[mm].imag;
+						spectrum[mm] = sqrt(re*re + im*im);
+					}
+					int fs = GetSampleFreq();
+					int coeff;
+					for (coeff = 0; coeff < D; coeff++) {
+						mfcc_result[coeff] = GetCoefficient(spectrum, fs, NUMFILTERS, M, coeff);
+					}
+				}
+
+				// (P3). Print GMM score using gmm model and mfcc_result for 1 21 ms frame
+				double llh = gmm_score(gmm, mfcc_result, N);
+			}
+			startflag = 0;
+		}
+	}
+}
 
 void storeGMM(int index, int param)
 {
@@ -98,58 +156,5 @@ void twiddleFactors()
 	for(ii=0; ii<M; ii++){
 		w[ii].real = cos((float)ii/(float)M*PI);
 		w[ii].imag = sin((float)ii/(float)M*PI);
-	}
-}
-
-int main() {
-	int mm, bb, ll;
-
-	DSP_Init();
-
-	initializeGMM(K, D); // get GM model
-	twiddleFactors();
-
-	// main stalls here, interrupts drive operation
-	while(1) {
-		if(startflag){
-			 // Remove bias (DC offset)
-			avg = 0;
-			for(mm=0; mm<M; mm++){
-				avg = avg + X[mm];
-			}
-
-			// Measure the Magnitude of the input to find starting point
-			avg = avg/M;
-			magnitude = 0;
-			for(mm=0; mm<M; mm++){
-				magnitude = magnitude + abs(X[mm]-avg);
-			}
-
-			if(magnitude>30000){ // N-blocks
-				for(bb=0;bb<N;bb++){
-					for(ll=0; ll<M; ll++){
-						B[ll].real = X[ll];
-						B[ll].imag = 0;
-					}
-					// (P3). FFT: B is input and output, w is twiddle factors
-					fft(B, M, w);
-					// (P3). Find 13 MFCC coefficients
-					for(mm=0; mm<M; mm++){
-						double re = (double) B[mm].real;
-						double im = (double) B[mm].imag;
-						spectrum[mm] = sqrt(re*re + im*im);
-					}
-					int fs = GetSampleFreq();
-					int coeff;
-					for (coeff = 0; coeff < D; coeff++) {
-						mfcc_result[coeff] = GetCoefficient(spectrum, fs, numFilters, M, coeff);
-					}
-				}
-
-				// (P3). Print GMM score using gmm model and mfcc_result for 1 21 ms frame
-				double llh = gmm_score(gmm, mfcc_result, N);
-			}
-			startflag = 0;
-		}
 	}
 }

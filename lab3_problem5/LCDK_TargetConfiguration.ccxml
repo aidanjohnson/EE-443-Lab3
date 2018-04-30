@@ -12,11 +12,11 @@
             <platform XML_version="1.2" id="platform_0">
                 <instance XML_version="1.2" desc="LCDKOMAPL138_0" href="boards/lcdkomapl138.xml" id="LCDKOMAPL138_0" xml="lcdkomapl138.xml" xmlpath="boards"/>
                 <board XML_version="1.2" description="Texas Instruments OMAP-L138 Low Cost Development Kit" id="LCDKOMAPL138_0">
-                    <device HW_revision="1" XML_version="1.2" description="OMAP-L138 SoC" id="OMAPL138_0" partnum="OMAPL138">
+                    <device HW_revision="1" XML_version="1.2" description="OMAP-L138 SoC" id="OMAPL138_0" partnum="OMAPL138" simulation="no">
                         <router HW_revision="" XML_version="1.2" description="" id="device_0" isa="ICEPICK_C">
                             <subpath id="device_1">
-                                <cpu HW_revision="" XML_version="1.2" description="" id="device_2" isa="TMS320C674X">
-                                    <property Type="filepathfield" Value="..\..\CD\code\target_config_LCDK\OMAP-L138_LCDK.gel" id="GEL File"/>
+                                <cpu HW_revision="" XML_version="1.2" description="" deviceSim="false" id="device_2" isa="TMS320C674X">
+                                    <property Type="filepathfield" Value="OMAP-L138_LCDK.gel" id="GEL File"/>
                                 </cpu>
                             </subpath>
                         </router>

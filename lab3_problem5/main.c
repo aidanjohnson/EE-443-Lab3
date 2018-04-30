@@ -13,7 +13,7 @@
 //#define PI 3.141592
 #define BUFFERSIZE 256
 int M=BUFFERSIZE;
-#define numFilters 48
+#define NUMFILTERS 48
 
 #define CLASSES 3
 int K = CLASSES;  // Number of Classes
@@ -37,24 +37,24 @@ float avg = 0;
 
 int coeff=0;
 double spectrum[BUFFERSIZE];
-double mfcc_result[13]={0};
+double mfcc_result[FEATURES]={0};
 
 // SVM parameters
 struct svm_parameter param;		// set by parse_command_line
 struct svm_problem prob;		// set by read_problem
 struct svm_model *model;        // SVM model for training and classifications
 struct svm_node *x_space;
-int label[1];
 int cross_validation = 0;
 int nr_fold;
 
+void twiddleFactors();
 void initialization();
 void read_problem(double *featureVector, int *label,int N, int D);
 void do_cross_validation();
 
 // Predict
 int predict_probability=0;
-struct svm_node x[33];
+struct svm_node x[FEATURES];
 void predict(double *featureVector);
 
 // class, rho[3], nSV[3], sv_coef[sum(nSV)], SV[13*sum(nSV)]
@@ -66,14 +66,10 @@ int main()
 
   DSP_Init();
 
-  int ii, mm, bb, ll;
+  int mm, bb, ll;
   int cc = 0;
 
-  // Twiddle factor
-  for(ii=0; ii<M; ii++){
-	  w[ii].real = cos((float)ii/(float)M*PI);
-	  w[ii].imag = sin((float)ii/(float)M*PI);
-  }
+  twiddleFactors();
 
   // main stalls here, interrupts drive operation
   while(1) {
@@ -107,7 +103,7 @@ int main()
                   }
                   int fs = GetSampleFreq();
                   for (coeff = 0; coeff < D; coeff++) {
-                      mfcc_result[coeff] = GetCoefficient(spectrum, fs, numFilters, M, coeff);
+                      mfcc_result[coeff] = GetCoefficient(spectrum, fs, NUMFILTERS, M, coeff);
                   }
                   cc++;
         	  }
@@ -138,6 +134,16 @@ int main()
           startflag = 0;
       }
   }
+}
+
+void twiddleFactors()
+{
+	int ii;
+  	// Gets twiddle factor
+	for(ii=0; ii<M; ii++){
+		w[ii].real = cos((float)ii/(float)M*PI);
+		w[ii].imag = sin((float)ii/(float)M*PI);
+	}
 }
 
 void do_cross_validation()
@@ -269,11 +275,17 @@ void predict(double *featureVector)
 		if (predict_probability && (svm_type==C_SVC || svm_type==NU_SVC))
 		{
 			predict_label = svm_predict_probability(model,x,prob_estimates);
+			int c;
+			for(c=0;c<nr_class;c++) {
+				double label = c + 1.0;
+				printf("probability estimate for label %g: %g\n", label, prob_estimates[c]);
+			}
 		}
 		else
 		{
 			predict_label = svm_predict(model,x);
 		}
+
 		double label = predict_label + 1.0;
 		printf("predicted label: %g\n", label);
 
@@ -292,18 +304,18 @@ void predict(double *featureVector)
 			++total;
 		}
 	}
-	if (svm_type==NU_SVR || svm_type==EPSILON_SVR)
-	{
-		printf("Mean squared error = %g (regression)\n",error/total);
-		printf("Squared correlation coefficient = %g (regression)\n",
-			((total*sumpt-sump*sumt)*(total*sumpt-sump*sumt))/
-			((total*sumpp-sump*sump)*(total*sumtt-sumt*sumt))
-			);
-	}
-	else {
-		double acc = ((double) correct)/((double) total)*100.0;
-		printf("Accuracy = %g (classification)\n",acc);
-	}
+//	if (svm_type==NU_SVR || svm_type==EPSILON_SVR)
+//	{
+//		printf("Mean squared error = %g (regression)\n",error/total);
+//		printf("Squared correlation coefficient = %g (regression)\n",
+//			((total*sumpt-sump*sumt)*(total*sumpt-sump*sumt))/
+//			((total*sumpp-sump*sump)*(total*sumtt-sumt*sumt))
+//			);
+//	}
+//	else {
+//		double acc = ((double) correct)/((double) total)*100.0;
+//		printf("Accuracy = %g (classification)\n",acc);
+//	}
 
 	if(predict_probability)
 		free(prob_estimates);

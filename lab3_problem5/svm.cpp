@@ -2522,19 +2522,18 @@ double svm_predict_values(const svm_model *model, const svm_node *x, double* dec
 		int nr_class = model->nr_class;
 		int l = model->l;
 		
-		//double *kvalue = Malloc(double,l);
-		double kvalue[50];
+		double *kvalue = Malloc(double,l);
+		//double kvalue[50];
 		for(i=0;i<l;i++)
 			kvalue[i] = Kernel::k_function(x,model->SV[i],model->param);
 
-		//int *start = Malloc(int,nr_class);
-		int start[3];
+		int *start = Malloc(int,nr_class);
 		start[0] = 0;
 		for(i=1;i<nr_class;i++)
 			start[i] = start[i-1]+model->nSV[i-1];
 
-		//int *vote = Malloc(int,nr_class);
-		int vote[3];
+		int *vote = Malloc(int,nr_class);
+		//int vote[3];
 		for(i=0;i<nr_class;i++)
 			vote[i] = 0;
 
