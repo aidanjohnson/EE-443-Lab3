@@ -16,9 +16,15 @@
 #include <math.h>
 
 #define BUFFERSIZE 256
+int M = BUFFERSIZE;
 #define numFilters 48
-#define M BUFFERSIZE
-int kk = 0;
+//#define M BUFFERSIZE
+#define CLASSES 3
+int K = CLASSES;  // Number of Classes
+#define BLOCKS 1
+int N = BLOCKS;  // Number of Blocks
+#define FEATURES 13
+int D = FEATURES;  // Number of Features
 int startflag = 1;
 
 short X[BUFFERSIZE];
@@ -46,29 +52,8 @@ volatile union {
 	Uint8 i8[8];
 } UARTdouble;
 
-// comment out second header for UART, first for hard coded means, covars, weights
-//void storeGMM(double *parameters, int paramsize)
 void storeGMM(int index, int param)
 {
-//	int ii = 0;
-//	int iter = 0;
-//    Uint8 temp = 0;
-//	while(ii<paramsize){
-//		if(IsDataReady_UART2()){
-//            temp = Read_UART2();
-//            UARTdouble.i8[iter++] = temp;
-//            while(IsTxReady_UART2()==0) ;
-//            Write_UART2(1);
-//
-//            if(iter>7){
-//                iter = 0;
-//                parameters[ii++] = UARTdouble.sh;
-//                printf("Index: %d, Received double: %lf \n", ii, UARTdouble.sh);
-//            }
-//		}
-//	}
-
-	// uncomment for hard coded means, covars, weights; comment for UART
 	if (param == 1) {
 		gmm[0].means[index] = means[index];
 	} else if (param == 2) {
@@ -76,17 +61,10 @@ void storeGMM(int index, int param)
 	} else if (param == 3) {
 		gmm[0].covars[index] = covars[index];
 	}
-
 }
 
 void modelGM(int K, int D)
 {
-	// comment out for hard coded means, covars, weights; uncomment for UART
-//	storeGMM(gmm[0].means, D*K);
-//	storeGMM(gmm[0].weights, K);
-//	storeGMM(gmm[0].covars, D*K);
-
-	// uncomment for hard coded means, covars, weights; comment for UART
 	// Get GM model mean, weights, variances
 	int i;
 	for (i = 0; i < D*K; i++) {
@@ -124,14 +102,10 @@ void twiddleFactors()
 }
 
 int main() {
-	int K = 3; // Number of Classes
-	int N = 1; // Number of Blocks
-	int D = 13; // Number of Features
 	int mm, bb, ll;
 
 	DSP_Init();
 
-//	Init_UART2(115200); // set baudrate
 	initializeGMM(K, D); // get GM model
 	twiddleFactors();
 

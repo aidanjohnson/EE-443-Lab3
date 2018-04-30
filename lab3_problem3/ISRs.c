@@ -20,11 +20,12 @@
 
 //complex data structure used by FFT
 extern int startflag;
-extern int kk;
-#define M 256
-extern short X[M];
+#define BUFFERSIZE 256
+extern int M;
+extern short X[BUFFERSIZE];
 
 Int16 monoIn;
+int kk = 0;
 
 volatile union {
 	Uint32 UINT;
