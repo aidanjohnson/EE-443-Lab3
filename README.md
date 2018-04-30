@@ -1,13 +1,14 @@
 # EE 443 Lab 3
 
 ## Problem 1: (Matlab) [MFCC](https://www.mathworks.com/matlabcentral/fileexchange/32849-htk-mfcc-matlab)
-Status: In Progress
+Status: Complete
 - getMFCC.m
 - Frame sounds using A=21ms windows, B=10ms shift, and A-B=11ms of overlapping. Generate 13 MFCC coefficients for every frame. (4 seconds of sounds will generate 380 frames, that is the sample will have 380x13 MFCC coefficients matrix). Plot the 380x13 MFCC coefficients for all three Bird sounds in Matlab.
 
 ## Problem 2: (Matlab) Training [GMM](https://www.mathworks.com/help/stats/fitgmdist.html) using MFCC features
-Status: In Progress
+Status: Complete
 - gmm_traning.m
+- prints to txt means, variances, weights
 - Find the GMM parameters of the features found in Problem 1 to cluster the features.
 
 GMM parameters: In Matlab, 'CovarianceType', 'diagonal' to generate k times D covariances, where k is the number of classes, and D is the number of features.
@@ -24,13 +25,14 @@ GMModel = fitgmdist(X,k,'CovarianceType','diagonal');
 
 
 ## Problem 3: (LCDK) Classification of Bird sound using GMM
-Status: In Progress
+Status: Complete
+- correctly (most of the time) IDs bluejay and dove; duck correctly IDed
 - gmm_write.m
 - lab3_problem3 directory (main.c & ISRs.c)--gmm.h array lengths for means, covars, P(k|x) changed to 39; not sure why JP hard coded it and changed it from the memory allocation performed by the original.
 - Use GMM model trained in Problem 2 to classify the Bird sound received through Line input of LCDK.
 
 ## Problem 4: (Matlab) Training [SVM](https://www.mathworks.com/help/stats/fitcecoc.html) for Bird sound classification
-Status: In Progress
+Status: Complete
 - svm_training.m
 - Train the SVM model using the features found in Problem 1.
 
@@ -58,7 +60,8 @@ Mdl = fitcecoc(X,Y,'Learners',t);
 |                           | Md1.BinaryLearners{3}.Bias                        |                 |
 
 ## Problem 5: (LCDK) Classification of Bird sound using SVM
-Status: Started
+Status: Complete
 - svm_write.m
-- lab3_problem5 directory (main.c & ISRs.c)
+- svm_training.m
+- lab3_problem5 directory (main.c & ISRs.c)--*debugging!*
 - SVM to classify the features. Use MFCC features to classify Bird sounds.
