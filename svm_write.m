@@ -5,7 +5,6 @@ clear all;
 % set(s,'InputBufferSize',1024);
 % fopen(s);
 
-load('SVMModel.mat');
 load('Md1.mat');
 
 class = 3;

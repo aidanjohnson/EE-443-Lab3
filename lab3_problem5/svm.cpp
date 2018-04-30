@@ -2892,11 +2892,11 @@ svm_model *svm_read_model(double *param, int kkk, const svm_parameter *svmparam)
 	// read parameters
 	svm_model *model = Malloc(svm_model,1);
 	model->param = *svmparam;
-	model->rho = Malloc(double,kkk);
+	model->rho = Malloc(double, kkk);
 	model->probA = NULL;
 	model->probB = NULL;
 	model->sv_indices = NULL;
-	model->label = Malloc(int, 3);
+	model->label = Malloc(int, kkk);
 	model->nSV = Malloc(int, kkk);
 
 	// read sv_coef and SV
@@ -2938,10 +2938,10 @@ svm_model *svm_read_model(double *param, int kkk, const svm_parameter *svmparam)
 			model->SV[i][k].value = param[rr++];
 		}
 	}
-	for(k=0;k<13;k++){
-		model->SV[i][k].index = -1;
-		model->SV[i][k].value = 0;//param[rr++];
-	}
+//	for(k=0;k<13;k++){
+//		model->SV[i][k].index = -1;
+//		model->SV[i][k].value = 0;//param[rr++];
+//	}
 
 	model->free_sv = 1;	// XXX
 	return model;
