@@ -25,7 +25,6 @@ int D = FEATURES;  // Number of Features
 int kk=0;
 int startflag = 0;
 int training = 1;
-//int paramIndex = 0;
 
 short X[BUFFERSIZE];
 COMPLEX w[BUFFERSIZE];
@@ -39,7 +38,6 @@ float avg = 0;
 int coeff=0;
 double spectrum[BUFFERSIZE];
 double mfcc_result[13]={0};
-float llh;
 
 // SVM parameters
 struct svm_parameter param;		// set by parse_command_line
@@ -51,22 +49,12 @@ int cross_validation = 0;
 int nr_fold;
 
 void initialization();
-//void modelSVM(int K, int D);
-//void storeSVM(int index1, int index2, int param);
 void read_problem(double *featureVector, int *label,int N, int D);
 void do_cross_validation();
 
-// stores 8-bit segments of double (64-bit) data
-volatile union {
-	double sh;
-	Uint8 i8[8];
-} UARTdouble;
-
 // Predict
-int max_nr_attr = 64;
-int predict_probability=0;
+int predict_probability=1;
 struct svm_node x[33];
-static int (*info)(const char *fmt,...) = &printf;
 void predict(double *featureVector);
 
 // class, rho[3], nSV[3], sv_coef[sum(nSV)], SV[13*sum(nSV)]
@@ -212,84 +200,6 @@ void initialization()
 	cross_validation = 0;
 }
 
-//void storeSVM(int index1, int index2, int param)
-//{
-//	if (param == 1) {
-//		model->nr_class = params[paramIndex++];
-//	} else if (param == 2) {
-//		model->nSV[index1] = params[paramIndex++];
-//	} else if (param == 3) {
-//		struct svm_node svm;
-//		svm.index = index1;
-//		svm.value = params[paramIndex++];
-//		model->SV[index2] = &svm;
-//	} else if (param == 4) {
-//		model->sv_coef[index1][index2] = params[paramIndex++];
-//	} else if (param == 5) {
-//		model->rho[index1] = params[paramIndex++];
-//	}
-////	// UART input
-////	int iter = 0;
-////	while (iter < 8) {
-////		if(IsDataReady_UART2()){
-////			UARTdouble.i8[iter++] = Read_UART2();
-////			if(iter==8){
-////				if (param == 1) {
-////					model->nr_class = UARTdouble.sh;
-////				} else if (param == 2) {
-////					model->nSV[index1] = UARTdouble.sh;
-////				} else if (param == 3) {
-////					struct svm_node svm;
-////					svm.index = index1;
-////                    svm.value = UARTdouble.sh;
-////                    model->SV[index2] = &svm;
-////				} else if (param == 4) {
-////					model->sv_coef[index1][index2] = UARTdouble.sh;
-////				} else if (param == 5) {
-////					model->rho[index1] = UARTdouble.sh;
-////				}
-////                printf("Index: %d, Received double: %lf \n", ii, UARTdouble.sh);
-////            }
-////			while(IsTxReady_UART2()==0) ;
-////			Write_UART2(1);
-////			wait(10000);
-////		}
-////	}
-//}
-//
-//void modelSVM(int K, int D)
-//{
-//	// Get SVM model parameters
-//    svm_read_model(params, K, &param);
-//
-//    // uncomment for UART transfer
-//	// Get SVM model parameters
-////    storeSVM(0, 0, 1); // number of classes
-////	int i;
-////	for (i = 0; i < model->nr_class; i++) {
-////		storeSVM(i, 0, 2); // number of support vectors
-////	}
-////    int class;
-////	for(class = 0; class < model->nr_class; class++) {
-////        int sv;
-////        for(sv = 0; sv < model->nSV[class]; sv++) {
-////            int j;
-////            for(j = 0; j < D; j++) {
-////                storeSVM(class, sv*D+j, 3); // support vectors
-////            }
-////        }
-////	}
-////	for(class = 0; class < model->nr_class; class++) {
-////        int sv;
-////        for(sv = 0; sv < model->nSV[class]; sv++) {
-////            storeSVM(class, sv, 4); // alpha sv coefficients
-////        }
-////	}
-////    for(class = 0; class < model->nr_class; class++) {
-////        storeSVM(class, 0, 5); // rho bias
-////    }
-//}
-
 // read in a problem (in svmlight format)
 void read_problem(double *featureVector, int *label, int N, int D)
 {
@@ -332,7 +242,7 @@ void predict(double *featureVector)
 	if(predict_probability)
 	{
 		if (svm_type==NU_SVR || svm_type==EPSILON_SVR)
-			info("Prob. model for test data: target value = predicted value + z,\nz: Laplace distribution e^(-|z|/sigma)/(2sigma),sigma=%g\n",svm_get_svr_probability(model));
+			printf("Prob. model for test data: target value = predicted value + z,\nz: Laplace distribution e^(-|z|/sigma)/(2sigma),sigma=%g\n",svm_get_svr_probability(model));
 		else
 		{
 			int *labels=(int *) malloc(nr_class*sizeof(int));
@@ -342,7 +252,6 @@ void predict(double *featureVector)
 		}
 	}
 
-//	int max_line_len = 1024;
 	double target_label, predict_label;
 
 	for(i=0;i<N;i++)
@@ -352,16 +261,8 @@ void predict(double *featureVector)
 
 		for(j=0;j<D;j++)
 		{
-			if(i>=max_nr_attr-1)	// need one more for index = -1
-			{
-				max_nr_attr *= 2;
-//				x = (struct svm_node *) realloc(x,max_nr_attr*sizeof(struct svm_node));
-			}
-
 			x[j].index = j;
 			x[j].value = featureVector[i*D+j];
-
-//			++i;
 		}
 		x[i].index = -1;
 
@@ -393,15 +294,15 @@ void predict(double *featureVector)
 	}
 	if (svm_type==NU_SVR || svm_type==EPSILON_SVR)
 	{
-		info("Mean squared error = %g (regression)\n",error/total);
-		info("Squared correlation coefficient = %g (regression)\n",
+		printf("Mean squared error = %g (regression)\n",error/total);
+		printf("Squared correlation coefficient = %g (regression)\n",
 			((total*sumpt-sump*sumt)*(total*sumpt-sump*sumt))/
 			((total*sumpp-sump*sump)*(total*sumtt-sumt*sumt))
 			);
 	}
 	else {
 		double acc = ((double) correct)/((double) total)*100.0;
-		//info("Accuracy = %g (classification)\n",acc);
+		printf("Accuracy = %g (classification)\n",acc);
 	}
 
 	if(predict_probability)
