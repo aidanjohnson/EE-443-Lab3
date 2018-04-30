@@ -104,6 +104,7 @@ int main()
                   int fs = GetSampleFreq();
                   for (coeff = 0; coeff < D; coeff++) {
                       mfcc_result[coeff] = GetCoefficient(spectrum, fs, NUMFILTERS, M, coeff);
+                      printf("%d; ",mfcc_result[coeff]);
                   }
                   cc++;
         	  }
