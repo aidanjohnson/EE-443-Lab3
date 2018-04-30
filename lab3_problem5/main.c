@@ -53,7 +53,7 @@ void read_problem(double *featureVector, int *label,int N, int D);
 void do_cross_validation();
 
 // Predict
-int predict_probability=1;
+int predict_probability=0;
 struct svm_node x[33];
 void predict(double *featureVector);
 
