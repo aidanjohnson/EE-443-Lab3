@@ -2576,19 +2576,109 @@ double svm_predict_values(const svm_model *model, const svm_node *x, double* dec
 	}
 }
 
-double svm_predict(const svm_model *model, const svm_node *x)
+double svm_predict(double *param, int kkk, const svm_node *x)
 {
-	int nr_class = model->nr_class;
-	double *dec_values;
-	if(model->param.svm_type == ONE_CLASS ||
-	   model->param.svm_type == EPSILON_SVR ||
-	   model->param.svm_type == NU_SVR)
-		dec_values = Malloc(double, 1);
-	else 
-		dec_values = Malloc(double, nr_class*(nr_class-1)/2);
-	double pred_result = svm_predict_values(model, x, dec_values);
-	free(dec_values);
-	return pred_result;
+
+	// read parameters
+	svm_model *model = Malloc(svm_model,1);
+//	model->param = *svmparam;
+	model->rho = Malloc(double, kkk);
+	model->probA = NULL;
+	model->probB = NULL;
+	model->sv_indices = NULL;
+	model->label = Malloc(int, kkk);
+	model->nSV = Malloc(int, kkk);
+
+	// read sv_coef and SV
+	int pp, k;
+	int D = 13;
+	int rr=0;
+	model->nr_class = param[rr++];
+	for(pp=0;pp<model->nr_class;pp++){
+		model->rho[pp] = param[rr++];
+		model->label[pp] = pp;
+	}
+	model->l = 0;
+	for(pp=0;pp<model->nr_class;pp++){
+		model->nSV[pp] = param[rr++];
+		model->l += model->nSV[pp];
+	}
+
+	int m = model->nr_class;
+	int l = model->l;
+
+	model->sv_coef = Malloc(double *,m);
+	int i;
+	for(i=0;i<m;i++)
+		model->sv_coef[i] = Malloc(double,l);
+
+	for(k=0;k<m;k++){
+		for(i=0;i<model->nSV[k];i++){
+			model->sv_coef[k][i] = param[rr++];
+		}
+	}
+
+	model->SV = Malloc(svm_node*,l);
+	for(i=0;i<l;i++)
+		model->SV[i] = Malloc(svm_node,D+1);
+
+	for(i=0;i<l;i++){
+		for(k=0;k<13;k++){
+			model->SV[i][k].index = k;
+			model->SV[i][k].value = param[rr++];
+		}
+	}
+
+	double *sums = Malloc(double, 13);
+
+	int k;
+	for (k = 0; k < 3; k++) {
+		double bk = model->rho[k];
+		struct svm_node *xi = (model->SV[0]);
+		int i;
+		// This just displays the support vector
+		printf("\nxi = [");
+		for (i = 0; i < 14; i++) {
+			printf("%f, ", xi[i]);
+		}
+
+		double sum = 0;
+		for(i = 0; i < 13; i++) {
+
+			double ai = model->sv_coef[k][i];
+			double dp = 0.0;
+			int j;
+			for (j = 0; j < 14; j++) {
+				dp += (xi[j].value)*(x[j].value);
+			}
+			sum += ai*dp + bk;
+		}
+		sums[k] = sum;
+	}
+
+	printf("\nsums =[");
+	double rtn = -1.0;
+	for(k = 0; k < 3; k++) {
+		printf("%f, ", sums[k]);
+		if(sums[k] > 0)
+			rtn = k;
+	}
+	printf("]");
+
+	free(sums);
+
+	return rtn;
+//	int nr_class = model->nr_class;
+//	double *dec_values;
+//	if(model->param.svm_type == ONE_CLASS ||
+//	   model->param.svm_type == EPSILON_SVR ||
+//	   model->param.svm_type == NU_SVR)
+//		dec_values = Malloc(double, 1);
+//	else
+//		dec_values = Malloc(double, nr_class*(nr_class-1)/2);
+//	double pred_result = svm_predict_values(model, x, dec_values);
+//	free(dec_values);
+//	return pred_result;
 }
 
 double svm_predict_probability(
@@ -2763,6 +2853,7 @@ static char* readline(FILE *input)
 	}
 	return line;
 }
+
 
 //
 // FSCANF helps to handle fscanf failures.

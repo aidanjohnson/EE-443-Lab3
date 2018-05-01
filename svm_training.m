@@ -15,6 +15,8 @@ labels_dove = repmat({'Dove'},size(mfccs_dove, 1),1);
 
 labels = [labels_duck; labels_bluejay; labels_dove];
 birds = [mfccs_duck; mfccs_bluejay; mfccs_dove];
+% labels = [labels_bluejay; labels_dove];
+% birds = [mfccs_bluejay; mfccs_dove];
 t = templateSVM('SaveSupportVectors', 'on');
 Md1 = fitcecoc(birds, labels, 'Learners', t);
 

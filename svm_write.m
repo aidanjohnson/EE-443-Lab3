@@ -10,6 +10,7 @@ load('Md1.mat');
 class = 3;
 % sendUART(class, s);
 
+
 for n = 1:3
     rho = Md1.BinaryLearners{n}.Bias;
     bias(n) = rho;
