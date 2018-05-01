@@ -12,21 +12,21 @@ L = 22;            % cepstral sine lifter parameter
 hamming = @(N)(0.54-0.46*cos(2*pi*[0:N-1].'/(N-1)));
 
 % Read speech samples, sampling rate and precision from file
-[ speech, fs ] = audioread( 'Birdsound\Dove.mp3' );
+[ speech, fs ] = audioread( 'Dove.mp3' );
 
 % Feature extraction (feature vectors as columns)
 [ MFCCs{1}, FBEs, frames ] = ...
               mfcc( speech(:,1), fs, Tw, Ts, alpha, hamming, R, M, C, L );
 
 % Read speech samples, sampling rate and precision from file
-[ speech, fs ] = audioread( 'Birdsound\Bluejay.mp3' );
+[ speech, fs ] = audioread( 'Bluejay.mp3' );
 
 % Feature extraction (feature vectors as columns)
 [ MFCCs{2}, FBEs, frames ] = ...
               mfcc( speech(:,1), fs, Tw, Ts, alpha, hamming, R, M, C, L );
 
 % Read speech samples, sampling rate and precision from file
-[ speech, fs ] = audioread( 'Birdsound\Duck.wav' );
+[ speech, fs ] = audioread( 'Duck.wav' );
 
 % Feature extraction (feature vectors as columns)
 [ MFCCs{3}, FBEs, frames ] = ...
@@ -50,27 +50,38 @@ SV = reshape(SV, [1 429]);
 
 x = [rho nSV sv_coef SV];
 
-% UART open
-delete(instrfindall);
-s = serial('COM5', 'BaudRate',115200);
-set(s,'InputBufferSize',1024);
-fopen(s);
+printTXT('SVM_class_bias_n_coef_sv.txt', x);
 
-% sending floating point array
-flag = 0;
-ii = 1;
-y = typecast(x,'uint8') % uint8 array 
-
-while ii<=length(y)
-    for jj=1:20, fwrite(s, y(ii)); end
-    flag = fread(s,1,'uint8');
-    if(flag==1)
-        flag = 0;
-        ii = ii + 1
+function [] = printTXT(name, out)
+    fileID = fopen(name,'w');
+    fprintf(fileID,'{%f',out(1));
+    if length(out) > 1
+        fprintf(fileID,',%f',out(2:end));
     end
+    fprintf(fileID,'}');
 end
 
-for ii=1:100, fwrite(s, 0); end % garbage data
-
-fclose(s);
-delete(s);
+% UART open
+% delete(instrfindall);
+% s = serial('COM5', 'BaudRate',115200);
+% set(s,'InputBufferSize',1024);
+% fopen(s);
+% 
+% % sending floating point array
+% flag = 0;
+% ii = 1;
+% y = typecast(x,'uint8') % uint8 array 
+% 
+% while ii<=length(y)
+%     for jj=1:20, fwrite(s, y(ii)); end
+%     flag = fread(s,1,'uint8');
+%     if(flag==1)
+%         flag = 0;
+%         ii = ii + 1
+%     end
+% end
+% 
+% for ii=1:100, fwrite(s, 0); end % garbage data
+% 
+% fclose(s);
+% delete(s);

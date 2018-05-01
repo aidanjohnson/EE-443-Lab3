@@ -1,0 +1,17 @@
+
+**** Build of configuration Debug for project lab3_problem3 ****
+
+"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
+'Building file: ../main.c'
+'Invoking: C6000 Compiler'
+"C:/ti/ccsv6/tools/compiler/c6000_7.4.14/bin/cl6x" -mv6740 --abi=coffabi -g --include_path="C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include" --display_error_number --diag_warning=225 --diag_wrap=off --preproc_with_compile --preproc_dependency="main.pp"  "../main.c"
+'Finished building: ../main.c'
+' '
+'Building target: lab3_problem3.out'
+'Invoking: C6000 Linker'
+"C:/ti/ccsv6/tools/compiler/c6000_7.4.14/bin/cl6x" -mv6740 --abi=coffabi -g --display_error_number --diag_warning=225 --diag_wrap=off -z -m"lab3_problem3.map" -i"C:/ti/ccsv6/tools/compiler/c6000_7.4.14/lib" -i"C:/ti/ccsv6/tools/compiler/c6000_7.4.14/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="lab3_problem3_linkInfo.xml" --rom_model -o "lab3_problem3.out" "./ISRs.obj" "./LCDK_Support_DSP.obj" "./StartUp.obj" "./gmm.obj" "./libmfcc.obj" "./main.obj" "./vectors.obj" "../link6748.cmd"  -l"libc.a" 
+<Linking>
+'Finished building target: lab3_problem3.out'
+' '
+
+**** Build Finished ****

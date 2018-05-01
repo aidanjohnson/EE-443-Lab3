@@ -1,0 +1,78 @@
+################################################################################
+# Automatically-generated file. Do not edit!
+################################################################################
+
+SHELL = cmd.exe
+
+# Each subdirectory must supply rules for building sources it contributes
+ISRs.obj: ../ISRs.c $(GEN_OPTS) | $(GEN_HDRS)
+	@echo 'Building file: $<'
+	@echo 'Invoking: C6000 Compiler'
+	"C:/Users/johnsj96/Downloads/c6000_7.4.14/bin/cl6x" -mv6740 --abi=coffabi -g --include_path="C:/Users/johnsj96/Downloads/c6000_7.4.14/include" --diag_wrap=off --display_error_number --diag_warning=225 --preproc_with_compile --preproc_dependency="ISRs.d" $(GEN_OPTS__FLAG) "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+LCDK_Support_DSP.obj: ../LCDK_Support_DSP.c $(GEN_OPTS) | $(GEN_HDRS)
+	@echo 'Building file: $<'
+	@echo 'Invoking: C6000 Compiler'
+	"C:/Users/johnsj96/Downloads/c6000_7.4.14/bin/cl6x" -mv6740 --abi=coffabi -g --include_path="C:/Users/johnsj96/Downloads/c6000_7.4.14/include" --diag_wrap=off --display_error_number --diag_warning=225 --preproc_with_compile --preproc_dependency="LCDK_Support_DSP.d" $(GEN_OPTS__FLAG) "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+StartUp.obj: ../StartUp.c $(GEN_OPTS) | $(GEN_HDRS)
+	@echo 'Building file: $<'
+	@echo 'Invoking: C6000 Compiler'
+	"C:/Users/johnsj96/Downloads/c6000_7.4.14/bin/cl6x" -mv6740 --abi=coffabi -g --include_path="C:/Users/johnsj96/Downloads/c6000_7.4.14/include" --diag_wrap=off --display_error_number --diag_warning=225 --preproc_with_compile --preproc_dependency="StartUp.d" $(GEN_OPTS__FLAG) "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+assem.obj: ../assem.asm $(GEN_OPTS) | $(GEN_HDRS)
+	@echo 'Building file: $<'
+	@echo 'Invoking: C6000 Compiler'
+	"C:/Users/johnsj96/Downloads/c6000_7.4.14/bin/cl6x" -mv6740 --abi=coffabi -g --include_path="C:/Users/johnsj96/Downloads/c6000_7.4.14/include" --diag_wrap=off --display_error_number --diag_warning=225 --preproc_with_compile --preproc_dependency="assem.d" $(GEN_OPTS__FLAG) "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+autocorr.obj: ../autocorr.asm $(GEN_OPTS) | $(GEN_HDRS)
+	@echo 'Building file: $<'
+	@echo 'Invoking: C6000 Compiler'
+	"C:/Users/johnsj96/Downloads/c6000_7.4.14/bin/cl6x" -mv6740 --abi=coffabi -g --include_path="C:/Users/johnsj96/Downloads/c6000_7.4.14/include" --diag_wrap=off --display_error_number --diag_warning=225 --preproc_with_compile --preproc_dependency="autocorr.d" $(GEN_OPTS__FLAG) "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+flip.obj: ../flip.asm $(GEN_OPTS) | $(GEN_HDRS)
+	@echo 'Building file: $<'
+	@echo 'Invoking: C6000 Compiler'
+	"C:/Users/johnsj96/Downloads/c6000_7.4.14/bin/cl6x" -mv6740 --abi=coffabi -g --include_path="C:/Users/johnsj96/Downloads/c6000_7.4.14/include" --diag_wrap=off --display_error_number --diag_warning=225 --preproc_with_compile --preproc_dependency="flip.d" $(GEN_OPTS__FLAG) "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+libmfcc.obj: ../libmfcc.c $(GEN_OPTS) | $(GEN_HDRS)
+	@echo 'Building file: $<'
+	@echo 'Invoking: C6000 Compiler'
+	"C:/Users/johnsj96/Downloads/c6000_7.4.14/bin/cl6x" -mv6740 --abi=coffabi -g --include_path="C:/Users/johnsj96/Downloads/c6000_7.4.14/include" --diag_wrap=off --display_error_number --diag_warning=225 --preproc_with_compile --preproc_dependency="libmfcc.d" $(GEN_OPTS__FLAG) "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+main.obj: ../main.c $(GEN_OPTS) | $(GEN_HDRS)
+	@echo 'Building file: $<'
+	@echo 'Invoking: C6000 Compiler'
+	"C:/Users/johnsj96/Downloads/c6000_7.4.14/bin/cl6x" -mv6740 --abi=coffabi -g --include_path="C:/Users/johnsj96/Downloads/c6000_7.4.14/include" --diag_wrap=off --display_error_number --diag_warning=225 --preproc_with_compile --preproc_dependency="main.d" $(GEN_OPTS__FLAG) "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+svm.obj: ../svm.cpp $(GEN_OPTS) | $(GEN_HDRS)
+	@echo 'Building file: $<'
+	@echo 'Invoking: C6000 Compiler'
+	"C:/Users/johnsj96/Downloads/c6000_7.4.14/bin/cl6x" -mv6740 --abi=coffabi -g --include_path="C:/Users/johnsj96/Downloads/c6000_7.4.14/include" --diag_wrap=off --display_error_number --diag_warning=225 --preproc_with_compile --preproc_dependency="svm.d" $(GEN_OPTS__FLAG) "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+vectors.obj: ../vectors.asm $(GEN_OPTS) | $(GEN_HDRS)
+	@echo 'Building file: $<'
+	@echo 'Invoking: C6000 Compiler'
+	"C:/Users/johnsj96/Downloads/c6000_7.4.14/bin/cl6x" -mv6740 --abi=coffabi -g --include_path="C:/Users/johnsj96/Downloads/c6000_7.4.14/include" --diag_wrap=off --display_error_number --diag_warning=225 --preproc_with_compile --preproc_dependency="vectors.d" $(GEN_OPTS__FLAG) "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+

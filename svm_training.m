@@ -1,9 +1,9 @@
 clear all;
 close all;
 
-[mfccs_duck] = getMFCC('Duck.wav');
-[mfccs_bluejay] = getMFCC('Bluejay.mp3');
-[mfccs_dove] = getMFCC('Dove.mp3');
+[mfccs_duck] = getMFCC('Duck.wav',1);
+[mfccs_bluejay] = getMFCC('Bluejay.mp3',1);
+[mfccs_dove] = getMFCC('Dove.mp3',1);
 
 save('mfccs_duck.mat','mfccs_duck');
 save('mfccs_bluejay.mat','mfccs_bluejay');
@@ -15,8 +15,6 @@ labels_dove = repmat({'Dove'},size(mfccs_dove, 1),1);
 
 labels = [labels_duck; labels_bluejay; labels_dove];
 birds = [mfccs_duck; mfccs_bluejay; mfccs_dove];
-% labels = [labels_bluejay; labels_dove];
-% birds = [mfccs_bluejay; mfccs_dove];
 t = templateSVM('SaveSupportVectors', 'on');
 Md1 = fitcecoc(birds, labels, 'Learners', t);
 
