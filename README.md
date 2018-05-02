@@ -1,5 +1,8 @@
 # EE 443 Lab 3
 
+GMM Library: https://github.com/snitish/libgmm
+SVM Library: https://www.csie.ntu.edu.tw/~cjlin/libsvm/
+
 ## Problem 1: (Matlab) [MFCC](https://www.mathworks.com/matlabcentral/fileexchange/32849-htk-mfcc-matlab)
 Status: Complete
 - getMFCC.m
